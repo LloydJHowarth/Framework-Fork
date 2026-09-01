@@ -43,30 +43,30 @@ jobs:
           path: outputs
 
 
-    build-libraries:
-      name: ${{ matrix.type }}-${{ matrix.name }}
-      runs-on: ${{ matrix.os }}
-      strategy:
-        fail-fast: false
-        matrix:
-          include:
-            - { type: Bindings, name: sdl, os: windows-2022, file: SDL.sh }
+  build-bindings:
+    name: ${{ matrix.type }}-${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { type: Bindings, name: sdl, os: windows-2022, file: SDL.sh }
 
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v6.0.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
 
-        - name: Build
-          shell: bash
-          run: |
-            chmod +x .github/scripts/${{ matrix.file }}
-            ./.github/scripts/${{ matrix.file }}
+      - name: Build
+        shell: bash
+        run: |
+          chmod +x .github/scripts/${{ matrix.file }}
+          ./.github/scripts/${{ matrix.file }}
 
-        - name: Upload
-          uses: actions/upload-artifact@v7.0.1
-          with:
-            name: ${{ matrix.type }}-${{ matrix.name }}
-            path: outputs
+      - name: Upload
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: ${{ matrix.type }}-${{ matrix.name }}
+          path: outputs
           
   publish:
     name: Publish
