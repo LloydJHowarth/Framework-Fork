@@ -7,7 +7,7 @@ OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
 # Setup
-if [[ "$RID" == "iossimulator-"* ]]; then
+if [[ "$NAME" == "iossimulator-"* ]]; then
   SDK="iphonesimulator"
 else
   SDK="iphoneos"
