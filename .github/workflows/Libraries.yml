@@ -37,7 +37,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: ${{ matrix.type }}-${{ matrix.name }}
+          name: ${{ matrix.name }}
           path: outputs
 
   publish:
@@ -53,6 +53,8 @@ jobs:
           fetch-depth: 0
 
       - name: Configure
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -72,16 +74,10 @@ jobs:
 
       - name: Commit
         run: |
-          for DIR in artifacts/*; do
-            [ -d "$DIR" ] || continue
-            NAME=$(basename "$DIR")
-            TYPE="${NAME%%-*}"
-            DESTINATION="${NAME#*-}"
-            mkdir -p "$TYPE/$DESTINATION"
-            cp -r "$DIR"/. "$TYPE/$DESTINATION"/
-          done
+          cp -r artifacts/. .
+          rm -rf artifacts
           
-          git add . ':!artifacts'
+          git add .
           git commit -m "Libraries"
           git push origin Libraries --force
 
