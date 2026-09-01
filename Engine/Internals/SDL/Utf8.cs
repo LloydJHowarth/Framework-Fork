@@ -21,7 +21,7 @@ namespace Engine.SDL3
             {
                 if (free)
                 {
-                    SDL_free(ptr);
+                    iSDL_free(ptr);
                 }
             }
         }
