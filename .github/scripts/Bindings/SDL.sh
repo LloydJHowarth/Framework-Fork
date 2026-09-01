@@ -6,10 +6,12 @@ BASEPATH="$(pwd)"
 OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
+
 # SDL
 if [ ! -d "$BASEPATH/SDL" ]; then
     git clone --recurse-submodules https://github.com/libsdl-org/SDL.git "$BASEPATH/SDL"
 fi
+
 
 # Files
 FILES=(
@@ -69,6 +71,7 @@ FILES=(
   SDL_vulkan
 )
 
+
 # Generate
 for file in "${FILES[@]}"; do
   echo "Generating $file.h"
@@ -110,21 +113,19 @@ done
 # Post process (order matters)
 find "$OUTPUTS" -type f -name "*.cs" -print0 | while IFS= read -r -d '' file; do
   
-  # Hints & properties
+  # Hints & Properties
   sed -i -E 's/public static ReadOnlySpan<byte> ([A-Za-z0-9_]+) => "([^"]*)"u8;/public static string \1 => "\2";/' "$file"
 
-  # Remove NativeTypeNames
+  # Remove Attributes
   sed -i -E '/\[return: NativeTypeName\("[^"]*"\)\]/d' "$file"
   sed -i -E 's/\[NativeTypeName\("[^"]*"\)\] //g' "$file"
   sed -i -E '/\[NativeTypeName.*\]/d' "$file"
 
-  # Remove argslist
+  # Remove Argslist
   sed -i -E 's/\, __arglist//g' "$file"
   
-  # Private Methods
-  sed -i 's/public static extern/private static extern/g' "$file"
-  
-  # Rename methods
-  sed -i -E 's/(private static extern .* )([A-Za-z_][A-Za-z0-9_]*)\(/\1iSDL_\2(/' "$file"
+  # Rebuild Methods
+  sed -i -E 's/public static extern/private static extern/g' "$file"
+  sed -i -E 's/(static extern [^;]* )SDL_([^ (]+)\(/\1iSDL_\2(/g' "$file"
   
 done
