@@ -1,5 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using System.Text;
 using System;
 
 namespace Engine.SDL3
@@ -8,24 +8,27 @@ namespace Engine.SDL3
     {
         public static string SDL_Utf8ToString(byte* ptr, bool free = false)
         {
-            string text = Marshal.PtrToStringUTF8((IntPtr)ptr);
-        
-            if (free)
+            if (ptr == null)
             {
-                SDL.SDL_free(ptr);
+                return string.Empty;
             }
-        
-            return text ?? "";
+
+            try
+            {
+                return Marshal.PtrToStringUTF8((IntPtr)ptr) ?? string.Empty;
+            }
+            finally
+            {
+                if (free)
+                {
+                    SDL_free(ptr);
+                }
+            }
         }
-    
-        public static byte[] SDL_StringToUtf8(string data)
+
+        public static byte[] SDL_StringToUtf8(string value)
         {
-            if (data == null || data.Length <= 0)
-            {
-                return Array.Empty<byte>();
-            }
-        
-            return System.Text.Encoding.UTF8.GetBytes(data + '\0');
+            return Encoding.UTF8.GetBytes((value ?? string.Empty) + '\0');
         }
     }
 }
