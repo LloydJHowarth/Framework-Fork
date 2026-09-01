@@ -23,6 +23,3 @@ sudo apt-get install -y \
 # SDL
 source "$BASEPATH/.github/scripts/Libraries/SDL.sh"
 cp "$INSTALLPATH/lib/libSDL3.so" "$OUTPUTS"
-
-echo "Output files:"
-ls -la "$INSTALLPATH/lib/"

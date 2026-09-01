@@ -5,6 +5,7 @@ BASEPATH="$(cd "$WORKSPACE" && pwd)"
 
 git clone --recurse-submodules https://github.com/libsdl-org/SDL.git "$BASEPATH/SDL"
 
+SDLINSTALLPATH="$BASEPATH/SDL/install_output"
 INSTALLPATH="$BASEPATH/SDL/install_output"
 BUILDPATH="$BASEPATH/SDL/build_ouput"
 mkdir -p "$BUILDPATH"

@@ -66,7 +66,7 @@ ClangSharpPInvokeGenerator.cmd \
 -f $BASEPATH/SDL/include/SDL3/SDL_version.h \
 -f $BASEPATH/SDL/include/SDL3/SDL_main.h \
 -I $BASEPATH/SDL/include \
--n Monolith.SDL3 \
+-n Engine.SDL3 \
 -m SDL \
 -l SDL3 \
 -c file=multi \
