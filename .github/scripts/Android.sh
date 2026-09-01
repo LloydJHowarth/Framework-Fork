@@ -5,8 +5,6 @@ set -e
 BASEPATH="$(pwd)"
 OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
-
-# Requirements
 ANDROID_TARGET="21"
 ANDROID_COMPILE="36"
 NDK_VERSION="29.0.13846066"
