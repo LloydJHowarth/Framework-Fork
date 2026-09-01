@@ -10,4 +10,17 @@
         <ProjectReference Include="$(SolutionDir)\App\App.csproj" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <Architecture Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</Architecture>
+        <Architecture Condition="'$(RuntimeIdentifier)' == ''">osx-$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture.ToString().ToLower())</Architecture>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="$(SolutionDir)\Engine\Natives\Libraries\$(Architecture)\**\*">
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Visible>false</Visible>
+        </Content>
+    </ItemGroup>
+
 </Project>

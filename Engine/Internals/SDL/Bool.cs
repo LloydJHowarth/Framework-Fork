@@ -6,12 +6,10 @@ namespace Engine.SDL3
     {
         private readonly byte handle;
         
-        
         public SDL_Bool(bool value)
         {
             handle = (byte)(value ? 1 : 0);
         }
-        
         
         public static bool operator == (SDL_Bool left, SDL_Bool right)
         {

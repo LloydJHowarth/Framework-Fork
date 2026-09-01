@@ -7,7 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="$(SolutionDir)\App\App.csproj" />
+        <ProjectReference Include="$(SolutionDir)\App\App.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <Architecture Condition="'$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</Architecture>
+        <Architecture Condition="'$(RuntimeIdentifier)' == ''">linux-$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture.ToString().ToLower())</Architecture>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="$(SolutionDir)\Engine\Natives\Libraries\$(Architecture)\**\*">
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Visible>false</Visible>
+        </Content>
     </ItemGroup>
 
 </Project>
