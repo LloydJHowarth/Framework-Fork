@@ -30,8 +30,8 @@ jobs:
           - { type: Libraries, name: android-arm64-v8a, os: ubuntu-22.04, cpu: arm64-v8a, file: Android.sh }
         
           - { type: Libraries, name: ios-arm64, os: macos-15, cpu: arm64, file: IOS.sh }
+          - { type: Libraries, name: iossimulator-x64, os: macos-15, cpu: x86_64, file: IOS.sh }
           - { type: Libraries, name: iossimulator-arm64, os: macos-15, cpu: arm64, file: IOS.sh }
-          - { type: Libraries, name: iossimulator-x64, os: macos-15-intel, cpu: x86_64, file: IOS.sh }
         
     steps:
       - name: Checkout
