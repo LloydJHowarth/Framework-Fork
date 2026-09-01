@@ -42,7 +42,7 @@ jobs:
 
   publish:
     name: Publish
-    needs: build-bindings
+    needs: build-libraries
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
