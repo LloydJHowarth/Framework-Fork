@@ -61,7 +61,7 @@ jobs:
           dotnet tool install --global ClangSharpPInvokeGenerator
           echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
 
-      - name: Generate
+      - name: Build
         shell: bash
         run: |
           chmod +x .github/scripts/Bindings/${{ matrix.file }}
