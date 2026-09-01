@@ -3,7 +3,7 @@ set +e
 
 # Setup
 BASEPATH="$(pwd)"
-OUTPUTS="$BASEPATH/Bindings/Output"
+OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
 # SDL
