@@ -9,21 +9,21 @@ permissions:
 
 jobs:
   build-libraries:
-    name: ${{ matrix.destination }}
+    name: ${{ matrix.type }}-${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { destination: Libraries/linux-arm64, os: ubuntu-22.04-arm, cpu: aarch64, file: Linux.sh }
-          - { destination: Libraries/linux-x64, os: ubuntu-22.04, cpu: x86_64, file: Linux.sh }
-
-          - { destination: Libraries/win-arm64, os: windows-11-arm, cpu: arm64, file: Windows.sh }
-          - { destination: Libraries/win-x64, os: windows-2022, cpu: x64, file: Windows.sh }
-
-          - { destination: Libraries/osx-x64, os: macos-15-intel, cpu: x86_64, file: Mac.sh }
-          - { destination: Libraries/osx-arm64, os: macos-15, cpu: arm64, file: Mac.sh }
-
+          - { type: Libraries, name: linux-arm64, os: ubuntu-22.04-arm, cpu: aarch64, file: Linux.sh }
+          - { type: Libraries, name: linux-x64, os: ubuntu-22.04, cpu: x86_64, file: Linux.sh }
+        
+          - { type: Libraries, name: win-arm64, os: windows-11-arm, cpu: arm64, file: Windows.sh }
+          - { type: Libraries, name: win-x64, os: windows-2022, cpu: x64, file: Windows.sh }
+        
+          - { type: Libraries, name: osx-x64, os: macos-15-intel, cpu: x86_64, file: Mac.sh }
+          - { type: Libraries, name: osx-arm64, os: macos-15, cpu: arm64, file: Mac.sh }
+        
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -39,19 +39,18 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: ${{ matrix.destination }}
+          name: ${{ matrix.type }}-${{ matrix.name }}
           path: outputs
 
   build-bindings:
-    name: ${{ matrix.destination }}
+    name: ${{ matrix.type }}-${{ matrix.name }}
     needs: build-libraries
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { destination: Bindings/sdl, os: windows-2022, file: SDL.sh }
-
+          - { type: Bindings, name: sdl, os: windows-2022, file: SDL.sh }
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -71,14 +70,13 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: ${{ matrix.destination }}
+          name: ${{ matrix.type }}-${{ matrix.name }}
           path: outputs
-
+          
   publish:
     name: Publish
     needs: build-bindings
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -111,13 +109,13 @@ jobs:
         run: |
           for DIR in artifacts/*; do
             [ -d "$DIR" ] || continue
-
-            DESTINATION=$(basename "$DIR")
-
-            mkdir -p "$DESTINATION"
-            cp -r "$DIR"/. "$DESTINATION"/
+            NAME=$(basename "$DIR")
+            TYPE="${NAME%%-*}"
+            DESTINATION="${NAME#*-}"
+            mkdir -p "$TYPE/$DESTINATION"
+            cp -r "$DIR"/. "$TYPE/$DESTINATION"/
           done
-
+          
           git add . ':!artifacts'
           git commit -m "Natives"
           git push origin Natives --force
@@ -128,7 +126,12 @@ jobs:
 
           git checkout ${{ github.ref_name }}
 
-          git submodule add -f -b Natives https://github.com/${{ github.repository }} $SUBMODULE_PATH || true
+          if [ -d "$SUBMODULE_PATH/.git" ] || [ -f ".gitmodules" ]; then
+            git submodule set-url "$SUBMODULE_PATH" "https://github.com/${{ github.repository }}"
+          else
+            git submodule add -b Natives "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
+          fi
+
           git submodule set-branch -b Natives -- "$SUBMODULE_PATH"
           git submodule update --init --force --remote "$SUBMODULE_PATH"
 
