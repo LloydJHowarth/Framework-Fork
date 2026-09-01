@@ -17,9 +17,7 @@ sudo apt-get install -y \
   libdbus-1-dev libibus-1.0-dev libudev-dev libpipewire-0.3-dev libwayland-dev \
   libdecor-0-dev liburing-dev
 
-# Options
-GENERATOR="Ninja"
-
 # SDL
+ARGS=( -G "Ninja" -DSDL_SHARED=ON -DSDL_STATIC=OFF )
 source "$BASEPATH/.github/scripts/Libraries/SDL.sh"
 cp "$INSTALLPATH/lib/libSDL3.so" "$OUTPUTS"

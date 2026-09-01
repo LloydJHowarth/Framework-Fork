@@ -7,16 +7,16 @@ if [[ ! -d "$BASEPATH/SDL" ]]; then
     git clone --recurse-submodules https://github.com/libsdl-org/SDL.git "$BASEPATH/SDL"
 fi
 
+# Environment
 INSTALLPATH="$BASEPATH/SDL/install_output"
 BUILDPATH="$BASEPATH/SDL/build_ouput"
 mkdir -p "$BUILDPATH"
 mkdir -p "$INSTALLPATH"
 cd "$BUILDPATH"
 
-cmake .. -G "$GENERATOR" \
-  -DSDL_SHARED=ON \
-  -DSDL_STATIC=OFF \
-  -DSDL_INSTALL=ON \
+# SDL
+cmake .. \
+  "${ARGS[@]}" \
   -DSDL_INSTALL=ON \
   -DSDL_TEST_LIBRARY=OFF \
   -DCMAKE_BUILD_TYPE=Release \
