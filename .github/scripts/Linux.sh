@@ -6,10 +6,6 @@ BASEPATH="$(cd "$WORKSPACE" && pwd)"
 OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
-# Setup
-export GENERATOR="Ninja"
-
-# Packages
 sudo apt-get update
 sudo apt-get install -y \
   build-essential git make pkg-config cmake ninja-build \
@@ -19,6 +15,9 @@ sudo apt-get install -y \
   libasound2-dev libpulse-dev libaudio-dev libfribidi-dev libjack-dev libsndio-dev \
   libdbus-1-dev libibus-1.0-dev libudev-dev libpipewire-0.3-dev libwayland-dev \
   libdecor-0-dev liburing-dev
+
+# Setup
+export GENERATOR="Ninja"
 
 # SDL
 source "$BASEPATH/.github/scripts/Libraries/SDL.sh"
