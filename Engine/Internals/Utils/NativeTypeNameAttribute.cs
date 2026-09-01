@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System;
 
 namespace Engine
 {
@@ -7,13 +7,11 @@ namespace Engine
     [AttributeUsage(AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     internal sealed class NativeTypeNameAttribute : Attribute
     {
-        private readonly string _name;
-
         public NativeTypeNameAttribute(string name)
         {
-            _name = name;
+            Name = name;
         }
         
-        public string Name => _name;
+        public string Name { get; }
     }
 }

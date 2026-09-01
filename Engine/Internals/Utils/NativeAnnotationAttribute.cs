@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System;
 
 namespace Engine
 {
@@ -7,14 +7,12 @@ namespace Engine
     [AttributeUsage(AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue, AllowMultiple = true)]
     internal sealed class NativeAnnotationAttribute : Attribute
     {
-        private readonly string _annotation;
-        
         public NativeAnnotationAttribute(string annotation)
         {
-            _annotation = annotation;
+            Annotation = annotation;
         }
         
-        public string Annotation => _annotation;
+        public string Annotation { get; }
     }
 }
 

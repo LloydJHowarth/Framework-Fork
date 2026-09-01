@@ -50,7 +50,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { type: Bindings, name: sdl, os: windows-2022, file: SDL.sh }
+          - { type: Bindings, name: SDL, os: windows-2022, file: SDL.sh }
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
