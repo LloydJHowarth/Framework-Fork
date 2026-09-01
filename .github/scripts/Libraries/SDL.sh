@@ -16,8 +16,7 @@ mkdir -p "$INSTALLPATH"
 cd "$BUILDPATH"
 
 # SDL
-cmake .. \
-  "${ARGS[@]}" \
+"${ARGS[@]}" \
   -DSDL_INSTALL=ON \
   -DSDL_TEST_LIBRARY=OFF \
   -DCMAKE_BUILD_TYPE=Release \

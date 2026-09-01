@@ -7,6 +7,6 @@ OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
 # SDL
-ARGS=( -G "Visual Studio 17 2022" -DSDL_SHARED=ON -DSDL_STATIC=OFF )
+ARGS=( cmake .. -G "Visual Studio 17 2022" -DSDL_SHARED=ON -DSDL_STATIC=OFF )
 source "$BASEPATH/.github/scripts/Libraries/SDL.sh"
 cp "$INSTALLPATH/bin/SDL3.dll" "$OUTPUTS"

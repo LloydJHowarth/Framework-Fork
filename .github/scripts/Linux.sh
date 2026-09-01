@@ -16,6 +16,6 @@ sudo apt-get install -y \
   libdecor-0-dev liburing-dev
 
 # SDL
-ARGS=( -G "Ninja" -DSDL_SHARED=ON -DSDL_STATIC=OFF )
+ARGS=( cmake .. -G "Ninja" -DSDL_SHARED=ON -DSDL_STATIC=OFF )
 source "$BASEPATH/.github/scripts/Libraries/SDL.sh"
 cp "$INSTALLPATH/lib/libSDL3.so" "$OUTPUTS"

@@ -29,9 +29,9 @@ jobs:
           - { type: Libraries, name: android-arm64-v8a, os: ubuntu-22.04, cpu: arm64-v8a, file: Android.sh }
           - { type: Libraries, name: android-armeabi-v7a, os: ubuntu-22.04, cpu: armeabi-v7a, file: Android.sh }
         
-          - { type: Libraries, name: ios-arm64, os: macos-15, cpu: arm64, file: IOS.sh, extra: iphoneos }
-          - { type: Libraries, name: iossimulator-x64, os: macos-15, cpu: x86_64, file: IOS.sh, extra: iphonesimulator }
-          - { type: Libraries, name: iossimulator-arm64, os: macos-15, cpu: arm64, file: IOS.sh, extra: iphonesimulator }
+          - { type: Libraries, name: ios-arm64, os: macos-15, cpu: arm64, extra: iphoneos, file: IOS.sh }
+          - { type: Libraries, name: iossimulator-arm64, os: macos-15, cpu: arm64, extra: iphonesimulator, file: IOS.sh }
+          - { type: Libraries, name: iossimulator-x64, os: macos-15-intel, cpu: x86_64, extra: iphonesimulator, file: IOS.sh }
         
     steps:
       - name: Checkout
