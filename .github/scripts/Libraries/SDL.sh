@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set +e
 
-BASEPATH="$(cd "$WORKSPACE" && pwd)"
+BASEPATH="$(pwd)"
 
-git clone --recurse-submodules https://github.com/libsdl-org/SDL.git "$BASEPATH/SDL"
+if [[ ! -d "$BASEPATH/SDL" ]]; then
+    git clone --recurse-submodules https://github.com/libsdl-org/SDL.git "$BASEPATH/SDL"
+fi
 
 INSTALLPATH="$BASEPATH/SDL/install_output"
 BUILDPATH="$BASEPATH/SDL/build_ouput"

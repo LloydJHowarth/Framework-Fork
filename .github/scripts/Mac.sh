@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-# ENVIRONMENT
-BASEPATH="$(cd "$WORKSPACE" && pwd)"
+# Environment
+BASEPATH="$(pwd)"
 OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
-# Setup
-export GENERATOR="Ninja"
+# Options
+GENERATOR="Ninja"
 
 # SDL
 source "$BASEPATH/.github/scripts/Libraries/SDL.sh"
