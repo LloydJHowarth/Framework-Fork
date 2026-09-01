@@ -105,3 +105,26 @@ for file in "${FILES[@]}"; do
   ClangSharpPInvokeGenerator.cmd "${ARGS[@]}" -I "$BASEPATH/SDL/include" -f "$BASEPATH/SDL/include/SDL3/$file.h" -o "$OUTPUTS/$file.cs" || true
   
 done
+
+
+# Post process (order matters)
+find "$OUTPUTS" -type f -name "*.cs" -print0 | while IFS= read -r -d '' file; do
+  
+  # Hints & properties
+  sed -i -E 's/public static ReadOnlySpan<byte> ([A-Za-z0-9_]+) => "([^"]*)"u8;/public static string \1 => "\2";/' "$file"
+
+  # Remove NativeTypeNames
+  sed -i -E '/\[return: NativeTypeName\("[^"]*"\)\]/d' "$file"
+  sed -i -E 's/\[NativeTypeName\("[^"]*"\)\] //g' "$file"
+  sed -i -E '/\[NativeTypeName.*\]/d' "$file"
+
+  # Remove argslist
+  sed -i -E 's/\, __arglist//g' "$file"
+  
+  # Private Methods
+  sed -i 's/public static extern/private static extern/g' "$file"
+  
+  # Rename methods
+  sed -i -E 's/(private static extern .* )([A-Za-z_][A-Za-z0-9_]*)\(/\1iSDL_\2(/' "$file"
+  
+done
