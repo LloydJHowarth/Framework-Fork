@@ -74,9 +74,9 @@ FILES=(
 
 # Generate
 for file in "${FILES[@]}"; do
-  echo "Generating $file.h"
-
+  
   ARGS=(
+    -p SDL_
     -m SDL
     -l SDL3
     -n Engine.SDL3
@@ -91,6 +91,8 @@ for file in "${FILES[@]}"; do
     --generate fnptr-codegen=false
     --generate funcs-with-body=false
     
+    --with-access-specifier *=internal
+    
     --exclude SDL_memcpy
     --exclude SDL_memmove
     --exclude SDL_memset
@@ -104,7 +106,8 @@ for file in "${FILES[@]}"; do
     --additional=-U__unix__
     --additional=-U__APPLE__
   )
-
+    
+  echo "Generating $file.h"
   ClangSharpPInvokeGenerator.cmd "${ARGS[@]}" -I "$BASEPATH/SDL/include" -f "$BASEPATH/SDL/include/SDL3/$file.h" -o "$OUTPUTS/$file.cs" || true
   
 done
@@ -126,6 +129,6 @@ find "$OUTPUTS" -type f -name "*.cs" -print0 | while IFS= read -r -d '' file; do
   
   # Rebuild Methods
   sed -i -E 's/public static extern/private static extern/g' "$file"
-  sed -i -E 's/(static extern [^;]* )SDL_([^ (]+)\(/\1iSDL_\2(/g' "$file"
+  sed -E -i 's/(static extern [^ ]+ )([A-Za-z_][A-Za-z0-9_]*)\(/\1iSDL_\2(/g' "$file"
   
 done
