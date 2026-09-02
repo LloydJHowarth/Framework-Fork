@@ -3,19 +3,19 @@ using System;
 
 namespace Engine.SDL3
 {
-    public static unsafe partial class SDL
+    internal static unsafe partial class SDL
     {
-        public static SDL_SharedObject* SDL_LoadObject(byte* sofile)
+        internal static SDL_SharedObject* SDL_LoadObject(byte* sofile)
         {
             return iSDL_LoadObject(sofile);
         }
 
-        public static IntPtr SDL_LoadFunction(SDL_SharedObject* handle, byte* name)
+        internal static IntPtr SDL_LoadFunction(SDL_SharedObject* handle, byte* name)
         {
             return iSDL_LoadFunction(handle, name);
         }
 
-        public static void SDL_UnloadObject(SDL_SharedObject* handle)
+        internal static void SDL_UnloadObject(SDL_SharedObject* handle)
         {
             iSDL_UnloadObject(handle);
         }

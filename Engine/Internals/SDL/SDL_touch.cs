@@ -3,24 +3,24 @@ using System;
 
 namespace Engine.SDL3
 {
-    public static unsafe partial class SDL
+    internal static unsafe partial class SDL
     {
-        public static ulong* SDL_GetTouchDevices(int* count)
+        internal static ulong* SDL_GetTouchDevices(int* count)
         {
             return iSDL_GetTouchDevices(count);
         }
 
-        public static byte* SDL_GetTouchDeviceName(ulong touchID)
+        internal static byte* SDL_GetTouchDeviceName(ulong touchID)
         {
             return iSDL_GetTouchDeviceName(touchID);
         }
 
-        public static SDL_TouchDeviceType SDL_GetTouchDeviceType(ulong touchID)
+        internal static SDL_TouchDeviceType SDL_GetTouchDeviceType(ulong touchID)
         {
             return iSDL_GetTouchDeviceType(touchID);
         }
 
-        public static SDL_Finger** SDL_GetTouchFingers(ulong touchID, int* count)
+        internal static SDL_Finger** SDL_GetTouchFingers(ulong touchID, int* count)
         {
             return iSDL_GetTouchFingers(touchID, count);
         }

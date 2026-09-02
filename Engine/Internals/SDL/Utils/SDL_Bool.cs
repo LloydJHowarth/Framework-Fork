@@ -2,11 +2,11 @@
 
 namespace Engine.SDL3
 {
-    public readonly struct SDL_Bool : IEquatable<SDL_Bool>
+    internal readonly struct SDL_Bool : IEquatable<SDL_Bool>
     {
         private readonly byte handle;
         
-        public SDL_Bool(bool value)
+        internal SDL_Bool(bool value)
         {
             handle = (byte)(value ? 1 : 0);
         }

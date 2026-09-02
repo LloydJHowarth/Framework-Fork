@@ -3,14 +3,14 @@ using System;
 
 namespace Engine.SDL3
 {
-    public static unsafe partial class SDL
+    internal static unsafe partial class SDL
     {
-        public static void SDL_GUIDToString(SDL_GUID guid, byte* pszGUID, int cbGUID)
+        internal static void SDL_GUIDToString(SDL_GUID guid, byte* pszGUID, int cbGUID)
         {
             iSDL_GUIDToString(guid, pszGUID, cbGUID);
         }
 
-        public static SDL_GUID SDL_StringToGUID(byte* pchGUID)
+        internal static SDL_GUID SDL_StringToGUID(byte* pchGUID)
         {
             return iSDL_StringToGUID(pchGUID);
         }
