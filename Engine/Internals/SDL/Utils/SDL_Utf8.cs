@@ -6,7 +6,7 @@ namespace Engine.SDL3
 {
     internal static unsafe partial class SDL
     {
-        internal static string SDL_Utf8ToString(byte* ptr, bool free = false)
+        public static string SDL_Utf8ToString(byte* ptr, bool free = false)
         {
             if (ptr == null)
             {
@@ -26,7 +26,7 @@ namespace Engine.SDL3
             }
         }
 
-        internal static byte[] SDL_StringToUtf8(string value)
+        public static byte[] SDL_StringToUtf8(string value)
         {
             return Encoding.UTF8.GetBytes((value ?? string.Empty) + '\0');
         }

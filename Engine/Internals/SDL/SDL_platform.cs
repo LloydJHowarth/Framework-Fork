@@ -5,7 +5,7 @@ namespace Engine.SDL3
 {
     internal static unsafe partial class SDL
     {
-        internal static byte* SDL_GetPlatform()
+        public static byte* SDL_GetPlatform()
         {
             return iSDL_GetPlatform();
         }

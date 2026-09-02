@@ -5,12 +5,12 @@ namespace Engine.SDL3
 {
     internal static unsafe partial class SDL
     {
-        internal static int SDL_GetVersion()
+        public static int SDL_GetVersion()
         {
             return iSDL_GetVersion();
         }
 
-        internal static byte* SDL_GetRevision()
+        public static byte* SDL_GetRevision()
         {
             return iSDL_GetRevision();
         }

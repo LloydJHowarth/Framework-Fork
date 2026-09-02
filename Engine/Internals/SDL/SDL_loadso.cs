@@ -5,17 +5,17 @@ namespace Engine.SDL3
 {
     internal static unsafe partial class SDL
     {
-        internal static SDL_SharedObject* SDL_LoadObject(byte* sofile)
+        public static SDL_SharedObject* SDL_LoadObject(byte* sofile)
         {
             return iSDL_LoadObject(sofile);
         }
 
-        internal static IntPtr SDL_LoadFunction(SDL_SharedObject* handle, byte* name)
+        public static IntPtr SDL_LoadFunction(SDL_SharedObject* handle, byte* name)
         {
             return iSDL_LoadFunction(handle, name);
         }
 
-        internal static void SDL_UnloadObject(SDL_SharedObject* handle)
+        public static void SDL_UnloadObject(SDL_SharedObject* handle)
         {
             iSDL_UnloadObject(handle);
         }
