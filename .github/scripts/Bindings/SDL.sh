@@ -15,9 +15,11 @@ fi
 
 # Files
 FILES=(
+  SDL_assert
   SDL_atomic
   SDL_asyncio
   SDL_audio
+  SDL_bits
   SDL_blendmode
   SDL_camera
   SDL_clipboard
@@ -61,6 +63,7 @@ FILES=(
   SDL_stdinc
   SDL_storage
   SDL_surface
+  SDL_system
   SDL_thread
   SDL_time
   SDL_timer
