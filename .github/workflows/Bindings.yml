@@ -10,7 +10,6 @@ permissions:
 jobs:
   build-bindings:
     name: ${{ matrix.type }}-${{ matrix.name }}
-    needs: build-libraries
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
