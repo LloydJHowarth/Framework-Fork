@@ -18,7 +18,7 @@ yes | sdkmanager --install "platform-tools"
 
 # SDL Activity
 ARGS=()
-source "$BASEPATH/.github/scripts/Libraries/Activity.sh"
+source "$BASEPATH/.github/scripts/Libraries/SDLActivity.sh"
 cp "$INSTALLPATH/SDLActivity.jar" "$OUTPUTS"
 
 # SDL
