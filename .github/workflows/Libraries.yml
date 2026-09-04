@@ -9,30 +9,30 @@ permissions:
 
 jobs:
   build-libraries:
-    name: ${{ matrix.type }}-${{ matrix.name }}
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { type: Libraries, name: linux-x64, os: ubuntu-22.04, cpu: x86_64, file: Linux.sh }
-          - { type: Libraries, name: linux-arm64, os: ubuntu-22.04-arm, cpu: aarch64, file: Linux.sh }
-        
-          - { type: Libraries, name: win-x64, os: windows-2022, cpu: x64, file: Windows.sh }
-          - { type: Libraries, name: win-arm64, os: windows-11-arm, cpu: arm64, file: Windows.sh }
-        
-          - { type: Libraries, name: osx-arm64, os: macos-15, cpu: arm64, file: Mac.sh }
-          - { type: Libraries, name: osx-x64, os: macos-15-intel, cpu: x86_64, file: Mac.sh }
-        
-          - { type: Libraries, name: android-x86, os: ubuntu-22.04, cpu: x86, file: Android.sh }
-          - { type: Libraries, name: android-x86_64, os: ubuntu-22.04, cpu: x86_64, file: Android.sh }
-          - { type: Libraries, name: android-arm64-v8a, os: ubuntu-22.04, cpu: arm64-v8a, file: Android.sh }
-          - { type: Libraries, name: android-armeabi-v7a, os: ubuntu-22.04, cpu: armeabi-v7a, file: Android.sh }
-        
-          - { type: Libraries, name: ios-arm64, os: macos-15, cpu: arm64, extra: iphoneos, file: IOS.sh }
-          - { type: Libraries, name: iossimulator-arm64, os: macos-15, cpu: arm64, extra: iphonesimulator, file: IOS.sh }
-          - { type: Libraries, name: iossimulator-x64, os: macos-15-intel, cpu: x86_64, extra: iphonesimulator, file: IOS.sh }
-        
+          - { name: linux-x64, os: ubuntu-22.04, cpu: x86_64, file: Linux.sh }
+          - { name: linux-arm64, os: ubuntu-22.04-arm, cpu: aarch64, file: Linux.sh }
+
+          - { name: win-x64, os: windows-2022, cpu: x64, file: Windows.sh }
+          - { name: win-arm64, os: windows-11-arm, cpu: arm64, file: Windows.sh }
+
+          - { name: osx-arm64, os: macos-15, cpu: arm64, file: Mac.sh }
+          - { name: osx-x64, os: macos-15-intel, cpu: x86_64, file: Mac.sh }
+
+          - { name: android-x86, os: ubuntu-22.04, cpu: x86, file: Android.sh }
+          - { name: android-x86_64, os: ubuntu-22.04, cpu: x86_64, file: Android.sh }
+          - { name: android-arm64-v8a, os: ubuntu-22.04, cpu: arm64-v8a, file: Android.sh }
+          - { name: android-armeabi-v7a, os: ubuntu-22.04, cpu: armeabi-v7a, file: Android.sh }
+
+          - { name: ios-arm64, os: macos-15, cpu: arm64, extra: iphoneos, file: IOS.sh }
+          - { name: iossimulator-arm64, os: macos-15, cpu: arm64, extra: iphonesimulator, file: IOS.sh }
+          - { name: iossimulator-x64, os: macos-15-intel, cpu: x86_64, extra: iphonesimulator, file: IOS.sh }
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -50,13 +50,14 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: ${{ matrix.type }}-${{ matrix.name }}
+          name: ${{ matrix.name }}
           path: outputs
- 
+  
   publish:
     name: Publish
     needs: build-libraries
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -85,114 +86,30 @@ jobs:
         with:
           path: artifacts
 
-      - name: Debug artifacts
-        run: |
-          echo "========================================"
-          echo "WORKING DIRECTORY"
-          echo "========================================"
-          pwd
-
-          echo
-          echo "========================================"
-          echo "TOP LEVEL"
-          echo "========================================"
-          ls -la
-
-          echo
-          echo "========================================"
-          echo "ARTIFACTS DIRECTORY"
-          echo "========================================"
-          ls -la artifacts || true
-
-          echo
-          echo "========================================"
-          echo "ARTIFACT TREE"
-          echo "========================================"
-          find artifacts -print | sort
-
-          echo
-          echo "========================================"
-          echo "ARTIFACT FILES"
-          echo "========================================"
-          find artifacts -type f -print | sort
-
-          echo
-          echo "========================================"
-          echo "SYMLINKS"
-          echo "========================================"
-          find artifacts -type l -ls || true
-
-          echo
-          echo "========================================"
-          echo "GIT FILES"
-          echo "========================================"
-          find artifacts -name .git -print || true
-          find artifacts -name .gitmodules -print || true
-
       - name: Commit
         run: |
-          echo "========================================"
-          echo "PROCESSING ARTIFACTS"
-          echo "========================================"
-
           for DIR in artifacts/*; do
             [ -d "$DIR" ] || continue
-
+          
             NAME=$(basename "$DIR")
-            TYPE="${NAME%%-*}"
-            DESTINATION="${NAME#*-}"
-
-            echo
-            echo "DIR:         $DIR"
-            echo "NAME:        $NAME"
-            echo "TYPE:        $TYPE"
-            echo "DESTINATION: $DESTINATION"
-
-            mkdir -p "$TYPE/$DESTINATION"
-
-            echo "--- Contents before copy ---"
-            find "$DIR" -print | sort
-
-            echo "--- Copying ---"
-            cp -rv "$DIR"/. "$TYPE/$DESTINATION"/
-
-            echo "--- Destination after copy ---"
-            find "$TYPE/$DESTINATION" -print | sort
+            mkdir -p "$NAME"
+            cp -r "$DIR"/. "$NAME"/
           done
-
-          echo
-          echo "========================================"
-          echo "FINAL REPOSITORY"
-          echo "========================================"
-          find . -not -path './.git/*' -print | sort
-
-          echo
-          echo "========================================"
-          echo "GIT STATUS"
-          echo "========================================"
-          git status --short
-
+          
           git add . ':!artifacts'
-
-          echo
-          echo "========================================"
-          echo "STAGED FILES"
-          echo "========================================"
-          git diff --cached --name-status
-
           git commit -m "Libraries"
           git push origin Libraries --force
 
       - name: Reference
         run: |
           SUBMODULE_PATH="Engine/Natives/Libraries"
-
+          
           git checkout ${{ github.ref_name }}
-
-          git submodule add -b Bindings "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
+          
+          git submodule add -b Libraries "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
           git submodule set-branch -b Libraries -- "$SUBMODULE_PATH"
           git submodule update --init --force --remote "$SUBMODULE_PATH"
-
+          
           git add .gitmodules "$SUBMODULE_PATH"
           git commit -m "Libraries" || echo "No changes"
           git push origin ${{ github.ref_name }}
