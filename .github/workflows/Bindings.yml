@@ -94,12 +94,7 @@ jobs:
 
           git checkout ${{ github.ref_name }}
 
-          if [ -d "$SUBMODULE_PATH/.git" ] || [ -f ".gitmodules" ]; then
-            git submodule set-url "$SUBMODULE_PATH" "https://github.com/${{ github.repository }}"
-          else
-            git submodule add -b Bindings "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
-          fi
-
+          git submodule add -b Bindings "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
           git submodule set-branch -b Bindings -- "$SUBMODULE_PATH"
           git submodule update --init --force --remote "$SUBMODULE_PATH"
 
