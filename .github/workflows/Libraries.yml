@@ -1,4 +1,4 @@
-﻿name: Natives
+﻿name: Libraries
 
 on:
   workflow_dispatch:
