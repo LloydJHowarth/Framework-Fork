@@ -5,16 +5,9 @@ namespace Engine.SDL3
 {
     internal static unsafe partial class SDL
     {
-        public static SDL_AssertState SDL_ReportAssertion(SDL_AssertData* data, string func, string file, int line)
+        public static SDL_AssertState SDL_ReportAssertion(SDL_AssertData* data, byte* func, byte* file, int line)
         {
-            var value1 = SDL_StringToUtf8(func);
-            var value2 = SDL_StringToUtf8(file);
-            
-            fixed (byte* ptr1 = value1)
-            fixed (byte* ptr2 = value2)
-            {
-                return iSDL_ReportAssertion(data, ptr1, ptr2, line);
-            }
+            return iSDL_ReportAssertion(data, func, file, line);
         }
 
         public static void SDL_SetAssertionHandler(IntPtr handler, void* userdata)
@@ -27,12 +20,9 @@ namespace Engine.SDL3
             return iSDL_GetDefaultAssertionHandler();
         }
 
-        public static IntPtr SDL_GetAssertionHandler(out void* puserdata)
+        public static IntPtr SDL_GetAssertionHandler(void** puserdata)
         {
-            fixed (void** userdataPtr = &puserdata)
-            {
-                return iSDL_GetAssertionHandler(userdataPtr);
-            }
+            return iSDL_GetAssertionHandler(puserdata);
         }
 
         public static SDL_AssertData* SDL_GetAssertionReport()
