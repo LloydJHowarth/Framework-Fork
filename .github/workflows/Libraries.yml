@@ -88,6 +88,10 @@ jobs:
 
       - name: Commit
         run: |
+          echo "=== Artifacts tree ==="
+          find artifacts -print | sort || true
+          echo
+          
           for DIR in artifacts/*; do
             [ -d "$DIR" ] || continue
           
@@ -96,9 +100,7 @@ jobs:
             cp -r "$DIR"/. "$NAME"/
           done
           
-          rm -rf artifacts
-          
-          git add .
+          git add . ':!artifacts'
           git commit -m "Libraries"
           git push origin Libraries --force
 
