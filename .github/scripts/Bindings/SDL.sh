@@ -96,6 +96,7 @@ for file in "${FILES[@]}"; do
     
     --with-access-specifier *=internal
     
+    --exclude SDL_FUNCTION
     --exclude SDL_memcpy
     --exclude SDL_memmove
     --exclude SDL_memset
