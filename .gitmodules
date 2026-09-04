@@ -1,0 +1,4 @@
+[submodule "Engine/Natives/Bindings"]
+	path = Engine/Natives/Bindings
+	url = https://github.com/Monocade/Framework
+	branch = Bindings
