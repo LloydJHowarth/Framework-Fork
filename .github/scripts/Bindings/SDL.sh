@@ -16,14 +16,12 @@ fi
 # Files
 FILES=(
   SDL_assert
-  SDL_atomic
   SDL_asyncio
   SDL_audio
   SDL_bits
   SDL_blendmode
   SDL_camera
   SDL_clipboard
-  SDL_cpuinfo
   SDL_dialog
   SDL_error
   SDL_events
@@ -32,7 +30,6 @@ FILES=(
   SDL_gpu
   SDL_guid
   SDL_haptic
-  SDL_hidapi
   SDL_hints
   SDL_init
   SDL_iostream
@@ -43,8 +40,6 @@ FILES=(
   SDL_locale
   SDL_log
   SDL_main
-  SDL_messagebox
-  SDL_metal
   SDL_misc
   SDL_mouse
   SDL_mutex
@@ -71,7 +66,6 @@ FILES=(
   SDL_touch
   SDL_version
   SDL_video
-  SDL_vulkan
 )
 
 
