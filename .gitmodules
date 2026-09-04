@@ -1,8 +1,0 @@
-[submodule "Engine/Natives/Libraries"]
-	path = Engine/Natives/Libraries
-	url = https://github.com/Monocade/Framework
-	branch = Libraries
-[submodule "Engine/Natives/Bindings"]
-	path = Engine/Natives/Bindings
-	url = https://github.com/Monocade/Framework
-	branch = Bindings

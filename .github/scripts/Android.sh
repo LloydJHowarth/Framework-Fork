@@ -16,7 +16,7 @@ yes | sdkmanager --install "platforms;android-$ANDROID_COMPILE"
 yes | sdkmanager --install "ndk;$NDK_VERSION"
 yes | sdkmanager --install "platform-tools"
 
-# Activity
+# SDL Activity
 ARGS=()
 source "$BASEPATH/.github/scripts/Libraries/Activity.sh"
 cp "$INSTALLPATH/SDLActivity.jar" "$OUTPUTS"
