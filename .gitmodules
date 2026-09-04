@@ -1,0 +1,4 @@
+[submodule "Engine/Natives/Libraries"]
+	path = Engine/Natives/Libraries
+	url = https://github.com/Monocade/Framework
+	branch = Libraries
