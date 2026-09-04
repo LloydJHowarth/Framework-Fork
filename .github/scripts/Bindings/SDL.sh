@@ -17,11 +17,9 @@ fi
 FILES=(
   SDL_assert
   SDL_audio
-  SDL_bits
   SDL_blendmode
   SDL_camera
   SDL_clipboard
-  SDL_dialog
   SDL_error
   SDL_events
   SDL_filesystem
@@ -35,34 +33,25 @@ FILES=(
   SDL_joystick
   SDL_keyboard
   SDL_keycode
-  SDL_loadso
-  SDL_locale
   SDL_log
   SDL_main
-  SDL_messagebox
   SDL_misc
   SDL_mouse
-  SDL_notification
   SDL_pen
   SDL_pixels
   SDL_platform
   SDL_power
-  SDL_process
   SDL_properties
   SDL_rect
   SDL_render
-  SDL_revision
   SDL_scancode
   SDL_sensor
   SDL_stdinc
   SDL_storage
   SDL_surface
-  SDL_system
   SDL_time
   SDL_timer
-  SDL_tray
   SDL_touch
-  SDL_version
   SDL_video
 )
 
