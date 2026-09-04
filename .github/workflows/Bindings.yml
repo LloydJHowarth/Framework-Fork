@@ -9,13 +9,14 @@ permissions:
 
 jobs:
   build-bindings:
-    name: ${{ matrix.type }}-${{ matrix.name }}
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { type: Bindings, name: SDL, os: windows-2022, file: SDL.sh }
+          - { name: SDL, os: windows-2022, file: SDL.sh }
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -38,13 +39,14 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: ${{ matrix.type }}-${{ matrix.name }}
+          name: ${{ matrix.name }}
           path: outputs
-          
+  
   publish:
     name: Publish
     needs: build-bindings
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
@@ -77,11 +79,10 @@ jobs:
         run: |
           for DIR in artifacts/*; do
             [ -d "$DIR" ] || continue
+          
             NAME=$(basename "$DIR")
-            TYPE="${NAME%%-*}"
-            DESTINATION="${NAME#*-}"
-            mkdir -p "$TYPE/$DESTINATION"
-            cp -r "$DIR"/. "$TYPE/$DESTINATION"/
+            mkdir -p "$NAME"
+            cp -r "$DIR"/. "$NAME"/
           done
           
           git add . ':!artifacts'
@@ -91,13 +92,13 @@ jobs:
       - name: Reference
         run: |
           SUBMODULE_PATH="Engine/Natives/Bindings"
-
+          
           git checkout ${{ github.ref_name }}
-
+          
           git submodule add -b Bindings "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
           git submodule set-branch -b Bindings -- "$SUBMODULE_PATH"
           git submodule update --init --force --remote "$SUBMODULE_PATH"
-
+          
           git add .gitmodules "$SUBMODULE_PATH"
           git commit -m "Bindings" || echo "No changes"
           git push origin ${{ github.ref_name }}
