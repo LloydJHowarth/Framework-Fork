@@ -76,19 +76,97 @@ jobs:
           path: artifacts
 
       - name: Commit
+        shell: bash
         run: |
+          echo "=== Current directory ==="
+          pwd
+          echo
+          
+          echo "=== Git status ==="
+          git status --short
+          echo
+          
+          echo "=== Root directory ==="
+          ls -la
+          echo
+          
+          echo "=== Artifacts directory ==="
+          ls -la artifacts || true
+          echo
+          
+          echo "=== Artifacts tree ==="
+          find artifacts -print | sort || true
+          echo
+          
+          echo "=== Artifact file details ==="
+          find artifacts -type f -exec ls -lh {} \; || true
+          echo
+          
+          echo "=== Processing artifacts ==="
           for DIR in artifacts/*; do
-            [ -d "$DIR" ] || continue
+            echo
+            echo "--- Found: $DIR ---"
+          
+            if [ ! -d "$DIR" ]; then
+              echo "Skipping: not a directory"
+              continue
+            fi
           
             NAME=$(basename "$DIR")
+            echo "NAME: $NAME"
+            echo "Source: $DIR"
+            echo "Destination: $NAME"
+          
+            echo "Source contents:"
+            find "$DIR" -print | sort
+          
             mkdir -p "$NAME"
-            cp -r "$DIR"/. "$NAME"/
+          
+            echo "Copying..."
+            cp -rv "$DIR"/. "$NAME"/
+          
+            echo "Destination contents:"
+            find "$NAME" -print | sort
           done
           
+          echo
+          echo "=== Removing artifacts directory ==="
           rm -rf artifacts
           
+          echo
+          echo "=== Final directory tree ==="
+          find . -maxdepth 3 -print | sort
+          
+          echo
+          echo "=== Git status before add ==="
+          git status --short
+          
+          echo
+          echo "=== Git diff before add ==="
+          git diff --stat
+          
+          echo
+          echo "=== Staging ==="
           git add .
+          
+          echo
+          echo "=== Git status after add ==="
+          git status --short
+          
+          echo
+          echo "=== Staged files ==="
+          git diff --cached --name-status
+          
+          echo
+          echo "=== Staged diff stat ==="
+          git diff --cached --stat
+          
+          echo
+          echo "=== Committing ==="
           git commit -m "Bindings"
+          
+          echo
+          echo "=== Pushing ==="
           git push origin Bindings --force
 
       - name: Reference
