@@ -85,6 +85,8 @@ jobs:
             cp -r "$DIR"/. "$NAME"/
           done
           
+          rm -rf artifacts
+          
           git add .
           git commit -m "Bindings"
           git push origin Bindings --force

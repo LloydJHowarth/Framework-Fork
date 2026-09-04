@@ -96,6 +96,8 @@ jobs:
             cp -r "$DIR"/. "$NAME"/
           done
           
+          rm -rf artifacts
+          
           git add .
           git commit -m "Libraries"
           git push origin Libraries --force
