@@ -110,7 +110,7 @@ jobs:
           
           git checkout ${{ github.ref_name }}
           
-          git submodule add -b Libraries "https://github.com/${{ github.repository }}" "$SUBMODULE_PATH"
+          git submodule add -f -b Libraries https://github.com/${{ github.repository }} $SUBMODULE_PATH || true
           git submodule set-branch -b Libraries -- "$SUBMODULE_PATH"
           git submodule update --init --force --remote "$SUBMODULE_PATH"
           
