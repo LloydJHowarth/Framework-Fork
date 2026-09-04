@@ -104,7 +104,7 @@ for file in "${FILES[@]}"; do
   )
     
   echo "Generating $file.h"
-  ClangSharpPInvokeGenerator.cmd "${ARGS[@]}" -I "$BASEPATH/SDL/include" -f "$BASEPATH/SDL/include/SDL3/$file.h" -o "$OUTPUTS/$file.cs" || true
+  ClangSharpPInvokeGenerator.cmd "${ARGS[@]}" -I "$BASEPATH/SDL/include" -f "$BASEPATH/SDL/include/SDL3/$file.h" -o "$OUTPUTS/$file.gen.cs" || true
   
 done
 
