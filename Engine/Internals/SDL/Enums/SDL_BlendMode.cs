@@ -1,0 +1,18 @@
+﻿using System.Runtime.InteropServices;
+using System;
+
+namespace Engine.SDL3
+{
+    [Flags]
+    internal enum SDL_BlendMode : uint
+    {
+	    SDL_BLENDMODE_NONE = 0x00000000U,
+	    SDL_BLENDMODE_BLEND = 0x00000001U,
+	    SDL_BLENDMODE_BLEND_PREMULTIPLIED = 0x00000010U,
+	    SDL_BLENDMODE_ADD = 0x00000002U,
+	    SDL_BLENDMODE_ADD_PREMULTIPLIED = 0x00000020U,
+	    SDL_BLENDMODE_MOD = 0x00000004U,
+	    SDL_BLENDMODE_MUL = 0x00000008U,
+	    SDL_BLENDMODE_INVALID = 0x7FFFFFFFU,
+    }
+}

@@ -1,0 +1,17 @@
+﻿using System.Runtime.InteropServices;
+using System;
+
+namespace Engine.SDL3
+{
+    [Flags]
+    internal enum SDL_GPUTextureUsage : uint
+    {
+	    SDL_GPU_TEXTUREUSAGE_SAMPLER = (1U << 0),
+	    SDL_GPU_TEXTUREUSAGE_COLOR_TARGET = (1U << 1),
+	    SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET = (1U << 2),
+	    SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ = (1U << 3),
+	    SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ = (1U << 4),
+	    SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE = (1U << 5),
+	    SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE = (1U << 6),
+    }
+}
