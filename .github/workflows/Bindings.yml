@@ -74,18 +74,17 @@ jobs:
         uses: actions/download-artifact@v8.0.1
         with:
           path: artifacts
+          skip-decompress: true
 
       - name: Commit
         run: |
-          find artifacts -print | sort || true
-          
-          for DIR in artifacts/*; do
-            [ -d "$DIR" ] || continue
-            NAME=$(basename "$DIR")
-            mkdir -p "$NAME"
-            cp -r "$DIR"/. "$NAME"/
-          done
-          
+          find artifacts -type f -name '*.zip' -print0 |
+            while IFS= read -r -d '' zip; do
+              name="$(basename "$zip" .zip)"
+              mkdir -p "$name"
+              unzip -q "$zip" -d "$name"
+            done
+
           git add . ':!artifacts'
           git commit -m "Bindings"
           git push origin Bindings --force

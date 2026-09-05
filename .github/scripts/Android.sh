@@ -3,7 +3,7 @@ set -e
 
 # Environment
 BASEPATH="$(pwd)"
-OUTPUTS="$BASEPATH/outputs/$NAME"
+OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 ANDROID_TARGET="21"
 ANDROID_COMPILE="36"

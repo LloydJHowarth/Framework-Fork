@@ -3,7 +3,7 @@ set -e
 
 # Environment
 BASEPATH="$(pwd)"
-OUTPUTS="$BASEPATH/outputs/$NAME"
+OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 sudo apt-get update
 sudo apt-get install -y \

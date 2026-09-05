@@ -3,7 +3,7 @@ set +e
 
 # Setup
 BASEPATH="$(pwd)"
-OUTPUTS="$BASEPATH/outputs/$NAME"
+OUTPUTS="$BASEPATH/outputs"
 mkdir -p "$OUTPUTS"
 
 
