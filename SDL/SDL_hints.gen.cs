@@ -1,0 +1,873 @@
+using System;
+using System.Runtime.InteropServices;
+
+namespace Engine.SDL3
+{
+    internal enum SDL_HintPriority
+    {
+        SDL_HINT_DEFAULT,
+        SDL_HINT_NORMAL,
+        SDL_HINT_OVERRIDE,
+    }
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal unsafe delegate void SDL_HintCallback(void* userdata, [NativeTypeName("const char *")] byte* name, [NativeTypeName("const char *")] byte* oldValue, [NativeTypeName("const char *")] byte* newValue);
+
+    internal static unsafe partial class SDL
+    {
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetHintWithPriority", ExactSpelling = true)]
+        [return: NativeTypeName("bool")]
+        private static extern SDL_Bool iSDL_SetHintWithPriority([NativeTypeName("const char *")] byte* name, [NativeTypeName("const char *")] byte* value, SDL_HintPriority priority);
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetHint", ExactSpelling = true)]
+        [return: NativeTypeName("bool")]
+        private static extern SDL_Bool iSDL_SetHint([NativeTypeName("const char *")] byte* name, [NativeTypeName("const char *")] byte* value);
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ResetHint", ExactSpelling = true)]
+        [return: NativeTypeName("bool")]
+        private static extern SDL_Bool iSDL_ResetHint([NativeTypeName("const char *")] byte* name);
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ResetHints", ExactSpelling = true)]
+        private static extern void iSDL_ResetHints();
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetHint", ExactSpelling = true)]
+        [return: NativeTypeName("const char *")]
+        private static extern byte* iSDL_GetHint([NativeTypeName("const char *")] byte* name);
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetHintBoolean", ExactSpelling = true)]
+        [return: NativeTypeName("bool")]
+        private static extern SDL_Bool iSDL_GetHintBoolean([NativeTypeName("const char *")] byte* name, [NativeTypeName("bool")] SDL_Bool default_value);
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddHintCallback", ExactSpelling = true)]
+        [return: NativeTypeName("bool")]
+        private static extern SDL_Bool iSDL_AddHintCallback([NativeTypeName("const char *")] byte* name, [NativeTypeName("SDL_HintCallback")] IntPtr callback, void* userdata);
+
+        [DllImport("SDL3", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RemoveHintCallback", ExactSpelling = true)]
+        private static extern void iSDL_RemoveHintCallback([NativeTypeName("const char *")] byte* name, [NativeTypeName("SDL_HintCallback")] IntPtr callback, void* userdata);
+
+        [NativeTypeName("#define SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED \"SDL_ALLOW_ALT_TAB_WHILE_GRABBED\"")]
+        public static string SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED => "SDL_ALLOW_ALT_TAB_WHILE_GRABBED";
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY \"SDL_ANDROID_ALLOW_RECREATE_ACTIVITY\"")]
+        public static string SDL_HINT_ANDROID_ALLOW_RECREATE_ACTIVITY => "SDL_ANDROID_ALLOW_RECREATE_ACTIVITY";
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_BLOCK_ON_PAUSE \"SDL_ANDROID_BLOCK_ON_PAUSE\"")]
+        public static string SDL_HINT_ANDROID_BLOCK_ON_PAUSE => "SDL_ANDROID_BLOCK_ON_PAUSE";
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_LOW_LATENCY_AUDIO \"SDL_ANDROID_LOW_LATENCY_AUDIO\"")]
+        public static string SDL_HINT_ANDROID_LOW_LATENCY_AUDIO => "SDL_ANDROID_LOW_LATENCY_AUDIO";
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET \"SDL_ANDROID_AAUDIO_INPUT_PRESET\"")]
+        public static string SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET => "SDL_ANDROID_AAUDIO_INPUT_PRESET";
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_TRAP_BACK_BUTTON \"SDL_ANDROID_TRAP_BACK_BUTTON\"")]
+        public static string SDL_HINT_ANDROID_TRAP_BACK_BUTTON => "SDL_ANDROID_TRAP_BACK_BUTTON";
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_ALLOW_PERSISTENT_FOLDER_ACCESS \"SDL_ANDROID_ALLOW_PERSISTENT_FOLDER_ACCESS\"")]
+        public static string SDL_HINT_ANDROID_ALLOW_PERSISTENT_FOLDER_ACCESS => "SDL_ANDROID_ALLOW_PERSISTENT_FOLDER_ACCESS";
+
+        [NativeTypeName("#define SDL_HINT_APP_ID \"SDL_APP_ID\"")]
+        public static string SDL_HINT_APP_ID => "SDL_APP_ID";
+
+        [NativeTypeName("#define SDL_HINT_APP_NAME \"SDL_APP_NAME\"")]
+        public static string SDL_HINT_APP_NAME => "SDL_APP_NAME";
+
+        [NativeTypeName("#define SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS \"SDL_APPLE_TV_CONTROLLER_UI_EVENTS\"")]
+        public static string SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS => "SDL_APPLE_TV_CONTROLLER_UI_EVENTS";
+
+        [NativeTypeName("#define SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION \"SDL_APPLE_TV_REMOTE_ALLOW_ROTATION\"")]
+        public static string SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION => "SDL_APPLE_TV_REMOTE_ALLOW_ROTATION";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE \"SDL_AUDIO_ALSA_DEFAULT_DEVICE\"")]
+        public static string SDL_HINT_AUDIO_ALSA_DEFAULT_DEVICE => "SDL_AUDIO_ALSA_DEFAULT_DEVICE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE \"SDL_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE\"")]
+        public static string SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE => "SDL_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE \"SDL_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE\"")]
+        public static string SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE => "SDL_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_CATEGORY \"SDL_AUDIO_CATEGORY\"")]
+        public static string SDL_HINT_AUDIO_CATEGORY => "SDL_AUDIO_CATEGORY";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_CHANNELS \"SDL_AUDIO_CHANNELS\"")]
+        public static string SDL_HINT_AUDIO_CHANNELS => "SDL_AUDIO_CHANNELS";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME \"SDL_AUDIO_DEVICE_APP_ICON_NAME\"")]
+        public static string SDL_HINT_AUDIO_DEVICE_APP_ICON_NAME => "SDL_AUDIO_DEVICE_APP_ICON_NAME";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES \"SDL_AUDIO_DEVICE_SAMPLE_FRAMES\"")]
+        public static string SDL_HINT_AUDIO_DEVICE_SAMPLE_FRAMES => "SDL_AUDIO_DEVICE_SAMPLE_FRAMES";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_STREAM_NAME \"SDL_AUDIO_DEVICE_STREAM_NAME\"")]
+        public static string SDL_HINT_AUDIO_DEVICE_STREAM_NAME => "SDL_AUDIO_DEVICE_STREAM_NAME";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_STREAM_ROLE \"SDL_AUDIO_DEVICE_STREAM_ROLE\"")]
+        public static string SDL_HINT_AUDIO_DEVICE_STREAM_ROLE => "SDL_AUDIO_DEVICE_STREAM_ROLE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_RAW_STREAM \"SDL_AUDIO_DEVICE_RAW_STREAM\"")]
+        public static string SDL_HINT_AUDIO_DEVICE_RAW_STREAM => "SDL_AUDIO_DEVICE_RAW_STREAM";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DISK_INPUT_FILE \"SDL_AUDIO_DISK_INPUT_FILE\"")]
+        public static string SDL_HINT_AUDIO_DISK_INPUT_FILE => "SDL_AUDIO_DISK_INPUT_FILE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DISK_OUTPUT_FILE \"SDL_AUDIO_DISK_OUTPUT_FILE\"")]
+        public static string SDL_HINT_AUDIO_DISK_OUTPUT_FILE => "SDL_AUDIO_DISK_OUTPUT_FILE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DISK_TIMESCALE \"SDL_AUDIO_DISK_TIMESCALE\"")]
+        public static string SDL_HINT_AUDIO_DISK_TIMESCALE => "SDL_AUDIO_DISK_TIMESCALE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DRIVER \"SDL_AUDIO_DRIVER\"")]
+        public static string SDL_HINT_AUDIO_DRIVER => "SDL_AUDIO_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DUCK_OTHERS \"SDL_AUDIO_DUCK_OTHERS\"")]
+        public static string SDL_HINT_AUDIO_DUCK_OTHERS => "SDL_AUDIO_DUCK_OTHERS";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DUMMY_TIMESCALE \"SDL_AUDIO_DUMMY_TIMESCALE\"")]
+        public static string SDL_HINT_AUDIO_DUMMY_TIMESCALE => "SDL_AUDIO_DUMMY_TIMESCALE";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_FORMAT \"SDL_AUDIO_FORMAT\"")]
+        public static string SDL_HINT_AUDIO_FORMAT => "SDL_AUDIO_FORMAT";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_FREQUENCY \"SDL_AUDIO_FREQUENCY\"")]
+        public static string SDL_HINT_AUDIO_FREQUENCY => "SDL_AUDIO_FREQUENCY";
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_INCLUDE_MONITORS \"SDL_AUDIO_INCLUDE_MONITORS\"")]
+        public static string SDL_HINT_AUDIO_INCLUDE_MONITORS => "SDL_AUDIO_INCLUDE_MONITORS";
+
+        [NativeTypeName("#define SDL_HINT_AUTO_UPDATE_JOYSTICKS \"SDL_AUTO_UPDATE_JOYSTICKS\"")]
+        public static string SDL_HINT_AUTO_UPDATE_JOYSTICKS => "SDL_AUTO_UPDATE_JOYSTICKS";
+
+        [NativeTypeName("#define SDL_HINT_AUTO_UPDATE_SENSORS \"SDL_AUTO_UPDATE_SENSORS\"")]
+        public static string SDL_HINT_AUTO_UPDATE_SENSORS => "SDL_AUTO_UPDATE_SENSORS";
+
+        [NativeTypeName("#define SDL_HINT_BMP_SAVE_LEGACY_FORMAT \"SDL_BMP_SAVE_LEGACY_FORMAT\"")]
+        public static string SDL_HINT_BMP_SAVE_LEGACY_FORMAT => "SDL_BMP_SAVE_LEGACY_FORMAT";
+
+        [NativeTypeName("#define SDL_HINT_CAMERA_DRIVER \"SDL_CAMERA_DRIVER\"")]
+        public static string SDL_HINT_CAMERA_DRIVER => "SDL_CAMERA_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_CPU_FEATURE_MASK \"SDL_CPU_FEATURE_MASK\"")]
+        public static string SDL_HINT_CPU_FEATURE_MASK => "SDL_CPU_FEATURE_MASK";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_DIRECTINPUT \"SDL_JOYSTICK_DIRECTINPUT\"")]
+        public static string SDL_HINT_JOYSTICK_DIRECTINPUT => "SDL_JOYSTICK_DIRECTINPUT";
+
+        [NativeTypeName("#define SDL_HINT_FILE_DIALOG_DRIVER \"SDL_FILE_DIALOG_DRIVER\"")]
+        public static string SDL_HINT_FILE_DIALOG_DRIVER => "SDL_FILE_DIALOG_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_DISPLAY_USABLE_BOUNDS \"SDL_DISPLAY_USABLE_BOUNDS\"")]
+        public static string SDL_HINT_DISPLAY_USABLE_BOUNDS => "SDL_DISPLAY_USABLE_BOUNDS";
+
+        [NativeTypeName("#define SDL_HINT_DOS_ALLOW_DIRECT_FRAMEBUFFER \"SDL_DOS_ALLOW_DIRECT_FRAMEBUFFER\"")]
+        public static string SDL_HINT_DOS_ALLOW_DIRECT_FRAMEBUFFER => "SDL_DOS_ALLOW_DIRECT_FRAMEBUFFER";
+
+        [NativeTypeName("#define SDL_HINT_INVALID_PARAM_CHECKS \"SDL_INVALID_PARAM_CHECKS\"")]
+        public static string SDL_HINT_INVALID_PARAM_CHECKS => "SDL_INVALID_PARAM_CHECKS";
+
+        [NativeTypeName("#define SDL_HINT_EMSCRIPTEN_ASYNCIFY \"SDL_EMSCRIPTEN_ASYNCIFY\"")]
+        public static string SDL_HINT_EMSCRIPTEN_ASYNCIFY => "SDL_EMSCRIPTEN_ASYNCIFY";
+
+        [NativeTypeName("#define SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR \"SDL_EMSCRIPTEN_CANVAS_SELECTOR\"")]
+        public static string SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR => "SDL_EMSCRIPTEN_CANVAS_SELECTOR";
+
+        [NativeTypeName("#define SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT \"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT\"")]
+        public static string SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT => "SDL_EMSCRIPTEN_KEYBOARD_ELEMENT";
+
+        [NativeTypeName("#define SDL_HINT_ENABLE_SCREEN_KEYBOARD \"SDL_ENABLE_SCREEN_KEYBOARD\"")]
+        public static string SDL_HINT_ENABLE_SCREEN_KEYBOARD => "SDL_ENABLE_SCREEN_KEYBOARD";
+
+        [NativeTypeName("#define SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD \"SDL_ENABLE_STEAM_SCREEN_KEYBOARD\"")]
+        public static string SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD => "SDL_ENABLE_STEAM_SCREEN_KEYBOARD";
+
+        [NativeTypeName("#define SDL_HINT_EVDEV_DEVICES \"SDL_EVDEV_DEVICES\"")]
+        public static string SDL_HINT_EVDEV_DEVICES => "SDL_EVDEV_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_EVENT_LOGGING \"SDL_EVENT_LOGGING\"")]
+        public static string SDL_HINT_EVENT_LOGGING => "SDL_EVENT_LOGGING";
+
+        [NativeTypeName("#define SDL_HINT_FORCE_RAISEWINDOW \"SDL_FORCE_RAISEWINDOW\"")]
+        public static string SDL_HINT_FORCE_RAISEWINDOW => "SDL_FORCE_RAISEWINDOW";
+
+        [NativeTypeName("#define SDL_HINT_FRAMEBUFFER_ACCELERATION \"SDL_FRAMEBUFFER_ACCELERATION\"")]
+        public static string SDL_HINT_FRAMEBUFFER_ACCELERATION => "SDL_FRAMEBUFFER_ACCELERATION";
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLERCONFIG \"SDL_GAMECONTROLLERCONFIG\"")]
+        public static string SDL_HINT_GAMECONTROLLERCONFIG => "SDL_GAMECONTROLLERCONFIG";
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLERCONFIG_FILE \"SDL_GAMECONTROLLERCONFIG_FILE\"")]
+        public static string SDL_HINT_GAMECONTROLLERCONFIG_FILE => "SDL_GAMECONTROLLERCONFIG_FILE";
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLERTYPE \"SDL_GAMECONTROLLERTYPE\"")]
+        public static string SDL_HINT_GAMECONTROLLERTYPE => "SDL_GAMECONTROLLERTYPE";
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES \"SDL_GAMECONTROLLER_IGNORE_DEVICES\"")]
+        public static string SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES => "SDL_GAMECONTROLLER_IGNORE_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT \"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT\"")]
+        public static string SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT => "SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT";
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLER_SENSOR_FUSION \"SDL_GAMECONTROLLER_SENSOR_FUSION\"")]
+        public static string SDL_HINT_GAMECONTROLLER_SENSOR_FUSION => "SDL_GAMECONTROLLER_SENSOR_FUSION";
+
+        [NativeTypeName("#define SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT \"SDL_GDK_TEXTINPUT_DEFAULT_TEXT\"")]
+        public static string SDL_HINT_GDK_TEXTINPUT_DEFAULT_TEXT => "SDL_GDK_TEXTINPUT_DEFAULT_TEXT";
+
+        [NativeTypeName("#define SDL_HINT_GDK_TEXTINPUT_DESCRIPTION \"SDL_GDK_TEXTINPUT_DESCRIPTION\"")]
+        public static string SDL_HINT_GDK_TEXTINPUT_DESCRIPTION => "SDL_GDK_TEXTINPUT_DESCRIPTION";
+
+        [NativeTypeName("#define SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH \"SDL_GDK_TEXTINPUT_MAX_LENGTH\"")]
+        public static string SDL_HINT_GDK_TEXTINPUT_MAX_LENGTH => "SDL_GDK_TEXTINPUT_MAX_LENGTH";
+
+        [NativeTypeName("#define SDL_HINT_GDK_TEXTINPUT_SCOPE \"SDL_GDK_TEXTINPUT_SCOPE\"")]
+        public static string SDL_HINT_GDK_TEXTINPUT_SCOPE => "SDL_GDK_TEXTINPUT_SCOPE";
+
+        [NativeTypeName("#define SDL_HINT_GDK_TEXTINPUT_TITLE \"SDL_GDK_TEXTINPUT_TITLE\"")]
+        public static string SDL_HINT_GDK_TEXTINPUT_TITLE => "SDL_GDK_TEXTINPUT_TITLE";
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_LIBUSB \"SDL_HIDAPI_LIBUSB\"")]
+        public static string SDL_HINT_HIDAPI_LIBUSB => "SDL_HIDAPI_LIBUSB";
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_LIBUSB_GAMECUBE \"SDL_HIDAPI_LIBUSB_GAMECUBE\"")]
+        public static string SDL_HINT_HIDAPI_LIBUSB_GAMECUBE => "SDL_HIDAPI_LIBUSB_GAMECUBE";
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_LIBUSB_WHITELIST \"SDL_HIDAPI_LIBUSB_WHITELIST\"")]
+        public static string SDL_HINT_HIDAPI_LIBUSB_WHITELIST => "SDL_HIDAPI_LIBUSB_WHITELIST";
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_UDEV \"SDL_HIDAPI_UDEV\"")]
+        public static string SDL_HINT_HIDAPI_UDEV => "SDL_HIDAPI_UDEV";
+
+        [NativeTypeName("#define SDL_HINT_GPU_DRIVER \"SDL_GPU_DRIVER\"")]
+        public static string SDL_HINT_GPU_DRIVER => "SDL_GPU_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_OPENXR_LIBRARY \"SDL_OPENXR_LIBRARY\"")]
+        public static string SDL_HINT_OPENXR_LIBRARY => "SDL_OPENXR_LIBRARY";
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS \"SDL_HIDAPI_ENUMERATE_ONLY_CONTROLLERS\"")]
+        public static string SDL_HINT_HIDAPI_ENUMERATE_ONLY_CONTROLLERS => "SDL_HIDAPI_ENUMERATE_ONLY_CONTROLLERS";
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_IGNORE_DEVICES \"SDL_HIDAPI_IGNORE_DEVICES\"")]
+        public static string SDL_HINT_HIDAPI_IGNORE_DEVICES => "SDL_HIDAPI_IGNORE_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_IME_IMPLEMENTED_UI \"SDL_IME_IMPLEMENTED_UI\"")]
+        public static string SDL_HINT_IME_IMPLEMENTED_UI => "SDL_IME_IMPLEMENTED_UI";
+
+        [NativeTypeName("#define SDL_HINT_IOS_HIDE_HOME_INDICATOR \"SDL_IOS_HIDE_HOME_INDICATOR\"")]
+        public static string SDL_HINT_IOS_HIDE_HOME_INDICATOR => "SDL_IOS_HIDE_HOME_INDICATOR";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS \"SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS\"")]
+        public static string SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS => "SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES \"SDL_JOYSTICK_ARCADESTICK_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES => "SDL_JOYSTICK_ARCADESTICK_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED \"SDL_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED\"")]
+        public static string SDL_HINT_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED => "SDL_JOYSTICK_ARCADESTICK_DEVICES_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_BLACKLIST_DEVICES \"SDL_JOYSTICK_BLACKLIST_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_BLACKLIST_DEVICES => "SDL_JOYSTICK_BLACKLIST_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED \"SDL_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED\"")]
+        public static string SDL_HINT_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED => "SDL_JOYSTICK_BLACKLIST_DEVICES_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_DEVICE \"SDL_JOYSTICK_DEVICE\"")]
+        public static string SDL_HINT_JOYSTICK_DEVICE => "SDL_JOYSTICK_DEVICE";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_DRUM_DEVICES \"SDL_JOYSTICK_DRUM_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_DRUM_DEVICES => "SDL_JOYSTICK_DRUM_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ENHANCED_REPORTS \"SDL_JOYSTICK_ENHANCED_REPORTS\"")]
+        public static string SDL_HINT_JOYSTICK_ENHANCED_REPORTS => "SDL_JOYSTICK_ENHANCED_REPORTS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES \"SDL_JOYSTICK_FLIGHTSTICK_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES => "SDL_JOYSTICK_FLIGHTSTICK_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED \"SDL_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED\"")]
+        public static string SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED => "SDL_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_GAMEINPUT \"SDL_JOYSTICK_GAMEINPUT\"")]
+        public static string SDL_HINT_JOYSTICK_GAMEINPUT => "SDL_JOYSTICK_GAMEINPUT";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_GAMEINPUT_RAW \"SDL_JOYSTICK_GAMEINPUT_RAW\"")]
+        public static string SDL_HINT_JOYSTICK_GAMEINPUT_RAW => "SDL_JOYSTICK_GAMEINPUT_RAW";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_GAMECUBE_DEVICES \"SDL_JOYSTICK_GAMECUBE_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_GAMECUBE_DEVICES => "SDL_JOYSTICK_GAMECUBE_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED \"SDL_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED\"")]
+        public static string SDL_HINT_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED => "SDL_JOYSTICK_GAMECUBE_DEVICES_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_GUITAR_DEVICES \"SDL_JOYSTICK_GUITAR_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_GUITAR_DEVICES => "SDL_JOYSTICK_GUITAR_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI \"SDL_JOYSTICK_HIDAPI\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI => "SDL_JOYSTICK_HIDAPI";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS \"SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS => "SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE \"SDL_JOYSTICK_HIDAPI_GAMECUBE\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE => "SDL_JOYSTICK_HIDAPI_GAMECUBE";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE \"SDL_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE => "SDL_JOYSTICK_HIDAPI_GAMECUBE_RUMBLE_BRAKE";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS \"SDL_JOYSTICK_HIDAPI_JOY_CONS\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS => "SDL_JOYSTICK_HIDAPI_JOY_CONS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED \"SDL_JOYSTICK_HIDAPI_JOYCON_HOME_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED => "SDL_JOYSTICK_HIDAPI_JOYCON_HOME_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_LUNA \"SDL_JOYSTICK_HIDAPI_LUNA\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_LUNA => "SDL_JOYSTICK_HIDAPI_LUNA";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC \"SDL_JOYSTICK_HIDAPI_NINTENDO_CLASSIC\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC => "SDL_JOYSTICK_HIDAPI_NINTENDO_CLASSIC";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS3 \"SDL_JOYSTICK_HIDAPI_PS3\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_PS3 => "SDL_JOYSTICK_HIDAPI_PS3";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER \"SDL_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER => "SDL_JOYSTICK_HIDAPI_PS3_SIXAXIS_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS4 \"SDL_JOYSTICK_HIDAPI_PS4\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_PS4 => "SDL_JOYSTICK_HIDAPI_PS4";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL \"SDL_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL => "SDL_JOYSTICK_HIDAPI_PS4_REPORT_INTERVAL";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS5 \"SDL_JOYSTICK_HIDAPI_PS5\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_PS5 => "SDL_JOYSTICK_HIDAPI_PS5";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED => "SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SHIELD \"SDL_JOYSTICK_HIDAPI_SHIELD\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_SHIELD => "SDL_JOYSTICK_HIDAPI_SHIELD";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STADIA \"SDL_JOYSTICK_HIDAPI_STADIA\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_STADIA => "SDL_JOYSTICK_HIDAPI_STADIA";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STEAM \"SDL_JOYSTICK_HIDAPI_STEAM\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_STEAM => "SDL_JOYSTICK_HIDAPI_STEAM";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED \"SDL_JOYSTICK_HIDAPI_STEAM_HOME_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED => "SDL_JOYSTICK_HIDAPI_STEAM_HOME_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK \"SDL_JOYSTICK_HIDAPI_STEAMDECK\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK => "SDL_JOYSTICK_HIDAPI_STEAMDECK";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI \"SDL_JOYSTICK_HIDAPI_STEAM_HORI\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI => "SDL_JOYSTICK_HIDAPI_STEAM_HORI";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_LG4FF \"SDL_JOYSTICK_HIDAPI_LG4FF\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_LG4FF => "SDL_JOYSTICK_HIDAPI_LG4FF";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_8BITDO \"SDL_JOYSTICK_HIDAPI_8BITDO\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_8BITDO => "SDL_JOYSTICK_HIDAPI_8BITDO";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SINPUT \"SDL_JOYSTICK_HIDAPI_SINPUT\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_SINPUT => "SDL_JOYSTICK_HIDAPI_SINPUT";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_ZUIKI \"SDL_JOYSTICK_HIDAPI_ZUIKI\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_ZUIKI => "SDL_JOYSTICK_HIDAPI_ZUIKI";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI \"SDL_JOYSTICK_HIDAPI_FLYDIGI\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI => "SDL_JOYSTICK_HIDAPI_FLYDIGI";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_GAMESIR \"SDL_JOYSTICK_HIDAPI_GAMESIR\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_GAMESIR => "SDL_JOYSTICK_HIDAPI_GAMESIR";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH \"SDL_JOYSTICK_HIDAPI_SWITCH\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_SWITCH => "SDL_JOYSTICK_HIDAPI_SWITCH";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED \"SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED => "SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED => "SDL_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH2 \"SDL_JOYSTICK_HIDAPI_SWITCH2\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_SWITCH2 => "SDL_JOYSTICK_HIDAPI_SWITCH2";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS \"SDL_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS => "SDL_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_WII \"SDL_JOYSTICK_HIDAPI_WII\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_WII => "SDL_JOYSTICK_HIDAPI_WII";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_WII_PLAYER_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED => "SDL_JOYSTICK_HIDAPI_WII_PLAYER_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX \"SDL_JOYSTICK_HIDAPI_XBOX\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_XBOX => "SDL_JOYSTICK_HIDAPI_XBOX";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_360 \"SDL_JOYSTICK_HIDAPI_XBOX_360\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_XBOX_360 => "SDL_JOYSTICK_HIDAPI_XBOX_360";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED => "SDL_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS \"SDL_JOYSTICK_HIDAPI_XBOX_360_WIRELESS\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS => "SDL_JOYSTICK_HIDAPI_XBOX_360_WIRELESS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE \"SDL_JOYSTICK_HIDAPI_XBOX_ONE\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE => "SDL_JOYSTICK_HIDAPI_XBOX_ONE";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED \"SDL_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED => "SDL_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_GIP \"SDL_JOYSTICK_HIDAPI_GIP\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_GIP => "SDL_JOYSTICK_HIDAPI_GIP";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA \"SDL_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA\"")]
+        public static string SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA => "SDL_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_IOKIT \"SDL_JOYSTICK_IOKIT\"")]
+        public static string SDL_HINT_JOYSTICK_IOKIT => "SDL_JOYSTICK_IOKIT";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_LINUX_CLASSIC \"SDL_JOYSTICK_LINUX_CLASSIC\"")]
+        public static string SDL_HINT_JOYSTICK_LINUX_CLASSIC => "SDL_JOYSTICK_LINUX_CLASSIC";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_LINUX_DEADZONES \"SDL_JOYSTICK_LINUX_DEADZONES\"")]
+        public static string SDL_HINT_JOYSTICK_LINUX_DEADZONES => "SDL_JOYSTICK_LINUX_DEADZONES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS \"SDL_JOYSTICK_LINUX_DIGITAL_HATS\"")]
+        public static string SDL_HINT_JOYSTICK_LINUX_DIGITAL_HATS => "SDL_JOYSTICK_LINUX_DIGITAL_HATS";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES \"SDL_JOYSTICK_LINUX_HAT_DEADZONES\"")]
+        public static string SDL_HINT_JOYSTICK_LINUX_HAT_DEADZONES => "SDL_JOYSTICK_LINUX_HAT_DEADZONES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_MFI \"SDL_JOYSTICK_MFI\"")]
+        public static string SDL_HINT_JOYSTICK_MFI => "SDL_JOYSTICK_MFI";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_RAWINPUT \"SDL_JOYSTICK_RAWINPUT\"")]
+        public static string SDL_HINT_JOYSTICK_RAWINPUT => "SDL_JOYSTICK_RAWINPUT";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT \"SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT\"")]
+        public static string SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT => "SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ROG_CHAKRAM \"SDL_JOYSTICK_ROG_CHAKRAM\"")]
+        public static string SDL_HINT_JOYSTICK_ROG_CHAKRAM => "SDL_JOYSTICK_ROG_CHAKRAM";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_THREAD \"SDL_JOYSTICK_THREAD\"")]
+        public static string SDL_HINT_JOYSTICK_THREAD => "SDL_JOYSTICK_THREAD";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_THROTTLE_DEVICES \"SDL_JOYSTICK_THROTTLE_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_THROTTLE_DEVICES => "SDL_JOYSTICK_THROTTLE_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED \"SDL_JOYSTICK_THROTTLE_DEVICES_EXCLUDED\"")]
+        public static string SDL_HINT_JOYSTICK_THROTTLE_DEVICES_EXCLUDED => "SDL_JOYSTICK_THROTTLE_DEVICES_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_WGI \"SDL_JOYSTICK_WGI\"")]
+        public static string SDL_HINT_JOYSTICK_WGI => "SDL_JOYSTICK_WGI";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_WHEEL_DEVICES \"SDL_JOYSTICK_WHEEL_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_WHEEL_DEVICES => "SDL_JOYSTICK_WHEEL_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED \"SDL_JOYSTICK_WHEEL_DEVICES_EXCLUDED\"")]
+        public static string SDL_HINT_JOYSTICK_WHEEL_DEVICES_EXCLUDED => "SDL_JOYSTICK_WHEEL_DEVICES_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES \"SDL_JOYSTICK_ZERO_CENTERED_DEVICES\"")]
+        public static string SDL_HINT_JOYSTICK_ZERO_CENTERED_DEVICES => "SDL_JOYSTICK_ZERO_CENTERED_DEVICES";
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HAPTIC_AXES \"SDL_JOYSTICK_HAPTIC_AXES\"")]
+        public static string SDL_HINT_JOYSTICK_HAPTIC_AXES => "SDL_JOYSTICK_HAPTIC_AXES";
+
+        [NativeTypeName("#define SDL_HINT_KEYCODE_OPTIONS \"SDL_KEYCODE_OPTIONS\"")]
+        public static string SDL_HINT_KEYCODE_OPTIONS => "SDL_KEYCODE_OPTIONS";
+
+        [NativeTypeName("#define SDL_HINT_KMSDRM_DEVICE_INDEX \"SDL_KMSDRM_DEVICE_INDEX\"")]
+        public static string SDL_HINT_KMSDRM_DEVICE_INDEX => "SDL_KMSDRM_DEVICE_INDEX";
+
+        [NativeTypeName("#define SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER \"SDL_KMSDRM_REQUIRE_DRM_MASTER\"")]
+        public static string SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER => "SDL_KMSDRM_REQUIRE_DRM_MASTER";
+
+        [NativeTypeName("#define SDL_HINT_KMSDRM_ATOMIC \"SDL_KMSDRM_ATOMIC\"")]
+        public static string SDL_HINT_KMSDRM_ATOMIC => "SDL_KMSDRM_ATOMIC";
+
+        [NativeTypeName("#define SDL_HINT_LOGGING \"SDL_LOGGING\"")]
+        public static string SDL_HINT_LOGGING => "SDL_LOGGING";
+
+        [NativeTypeName("#define SDL_HINT_MAC_BACKGROUND_APP \"SDL_MAC_BACKGROUND_APP\"")]
+        public static string SDL_HINT_MAC_BACKGROUND_APP => "SDL_MAC_BACKGROUND_APP";
+
+        [NativeTypeName("#define SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK \"SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK\"")]
+        public static string SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK => "SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK";
+
+        [NativeTypeName("#define SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH \"SDL_MAC_OPENGL_ASYNC_DISPATCH\"")]
+        public static string SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH => "SDL_MAC_OPENGL_ASYNC_DISPATCH";
+
+        [NativeTypeName("#define SDL_HINT_MAC_OPTION_AS_ALT \"SDL_MAC_OPTION_AS_ALT\"")]
+        public static string SDL_HINT_MAC_OPTION_AS_ALT => "SDL_MAC_OPTION_AS_ALT";
+
+        [NativeTypeName("#define SDL_HINT_MAC_SCROLL_MOMENTUM \"SDL_MAC_SCROLL_MOMENTUM\"")]
+        public static string SDL_HINT_MAC_SCROLL_MOMENTUM => "SDL_MAC_SCROLL_MOMENTUM";
+
+        [NativeTypeName("#define SDL_HINT_MAC_PRESS_AND_HOLD \"SDL_MAC_PRESS_AND_HOLD\"")]
+        public static string SDL_HINT_MAC_PRESS_AND_HOLD => "SDL_MAC_PRESS_AND_HOLD";
+
+        [NativeTypeName("#define SDL_HINT_MAIN_CALLBACK_RATE \"SDL_MAIN_CALLBACK_RATE\"")]
+        public static string SDL_HINT_MAIN_CALLBACK_RATE => "SDL_MAIN_CALLBACK_RATE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_AUTO_CAPTURE \"SDL_MOUSE_AUTO_CAPTURE\"")]
+        public static string SDL_HINT_MOUSE_AUTO_CAPTURE => "SDL_MOUSE_AUTO_CAPTURE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS \"SDL_MOUSE_DOUBLE_CLICK_RADIUS\"")]
+        public static string SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS => "SDL_MOUSE_DOUBLE_CLICK_RADIUS";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_DOUBLE_CLICK_TIME \"SDL_MOUSE_DOUBLE_CLICK_TIME\"")]
+        public static string SDL_HINT_MOUSE_DOUBLE_CLICK_TIME => "SDL_MOUSE_DOUBLE_CLICK_TIME";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR \"SDL_MOUSE_DEFAULT_SYSTEM_CURSOR\"")]
+        public static string SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR => "SDL_MOUSE_DEFAULT_SYSTEM_CURSOR";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_DPI_SCALE_CURSORS \"SDL_MOUSE_DPI_SCALE_CURSORS\"")]
+        public static string SDL_HINT_MOUSE_DPI_SCALE_CURSORS => "SDL_MOUSE_DPI_SCALE_CURSORS";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE \"SDL_MOUSE_EMULATE_WARP_WITH_RELATIVE\"")]
+        public static string SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE => "SDL_MOUSE_EMULATE_WARP_WITH_RELATIVE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH \"SDL_MOUSE_FOCUS_CLICKTHROUGH\"")]
+        public static string SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH => "SDL_MOUSE_FOCUS_CLICKTHROUGH";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_NORMAL_SPEED_SCALE \"SDL_MOUSE_NORMAL_SPEED_SCALE\"")]
+        public static string SDL_HINT_MOUSE_NORMAL_SPEED_SCALE => "SDL_MOUSE_NORMAL_SPEED_SCALE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_MODE_CENTER \"SDL_MOUSE_RELATIVE_MODE_CENTER\"")]
+        public static string SDL_HINT_MOUSE_RELATIVE_MODE_CENTER => "SDL_MOUSE_RELATIVE_MODE_CENTER";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE \"SDL_MOUSE_RELATIVE_SPEED_SCALE\"")]
+        public static string SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE => "SDL_MOUSE_RELATIVE_SPEED_SCALE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE \"SDL_MOUSE_RELATIVE_SYSTEM_SCALE\"")]
+        public static string SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE => "SDL_MOUSE_RELATIVE_SYSTEM_SCALE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_WARP_MOTION \"SDL_MOUSE_RELATIVE_WARP_MOTION\"")]
+        public static string SDL_HINT_MOUSE_RELATIVE_WARP_MOTION => "SDL_MOUSE_RELATIVE_WARP_MOTION";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE \"SDL_MOUSE_RELATIVE_CURSOR_VISIBLE\"")]
+        public static string SDL_HINT_MOUSE_RELATIVE_CURSOR_VISIBLE => "SDL_MOUSE_RELATIVE_CURSOR_VISIBLE";
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_TOUCH_EVENTS \"SDL_MOUSE_TOUCH_EVENTS\"")]
+        public static string SDL_HINT_MOUSE_TOUCH_EVENTS => "SDL_MOUSE_TOUCH_EVENTS";
+
+        [NativeTypeName("#define SDL_HINT_MUTE_CONSOLE_KEYBOARD \"SDL_MUTE_CONSOLE_KEYBOARD\"")]
+        public static string SDL_HINT_MUTE_CONSOLE_KEYBOARD => "SDL_MUTE_CONSOLE_KEYBOARD";
+
+        [NativeTypeName("#define SDL_HINT_NO_SIGNAL_HANDLERS \"SDL_NO_SIGNAL_HANDLERS\"")]
+        public static string SDL_HINT_NO_SIGNAL_HANDLERS => "SDL_NO_SIGNAL_HANDLERS";
+
+        [NativeTypeName("#define SDL_HINT_OPENGL_LIBRARY \"SDL_OPENGL_LIBRARY\"")]
+        public static string SDL_HINT_OPENGL_LIBRARY => "SDL_OPENGL_LIBRARY";
+
+        [NativeTypeName("#define SDL_HINT_EGL_LIBRARY \"SDL_EGL_LIBRARY\"")]
+        public static string SDL_HINT_EGL_LIBRARY => "SDL_EGL_LIBRARY";
+
+        [NativeTypeName("#define SDL_HINT_OPENGL_ES_DRIVER \"SDL_OPENGL_ES_DRIVER\"")]
+        public static string SDL_HINT_OPENGL_ES_DRIVER => "SDL_OPENGL_ES_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER \"SDL_OPENGL_FORCE_SRGB_FRAMEBUFFER\"")]
+        public static string SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER => "SDL_OPENGL_FORCE_SRGB_FRAMEBUFFER";
+
+        [NativeTypeName("#define SDL_HINT_OPENVR_LIBRARY \"SDL_OPENVR_LIBRARY\"")]
+        public static string SDL_HINT_OPENVR_LIBRARY => "SDL_OPENVR_LIBRARY";
+
+        [NativeTypeName("#define SDL_HINT_ORIENTATIONS \"SDL_ORIENTATIONS\"")]
+        public static string SDL_HINT_ORIENTATIONS => "SDL_ORIENTATIONS";
+
+        [NativeTypeName("#define SDL_HINT_POLL_SENTINEL \"SDL_POLL_SENTINEL\"")]
+        public static string SDL_HINT_POLL_SENTINEL => "SDL_POLL_SENTINEL";
+
+        [NativeTypeName("#define SDL_HINT_PREFERRED_LOCALES \"SDL_PREFERRED_LOCALES\"")]
+        public static string SDL_HINT_PREFERRED_LOCALES => "SDL_PREFERRED_LOCALES";
+
+        [NativeTypeName("#define SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE \"SDL_QUIT_ON_LAST_WINDOW_CLOSE\"")]
+        public static string SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE => "SDL_QUIT_ON_LAST_WINDOW_CLOSE";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DIRECT3D_THREADSAFE \"SDL_RENDER_DIRECT3D_THREADSAFE\"")]
+        public static string SDL_HINT_RENDER_DIRECT3D_THREADSAFE => "SDL_RENDER_DIRECT3D_THREADSAFE";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DIRECT3D11_DEBUG \"SDL_RENDER_DIRECT3D11_DEBUG\"")]
+        public static string SDL_HINT_RENDER_DIRECT3D11_DEBUG => "SDL_RENDER_DIRECT3D11_DEBUG";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DIRECT3D11_WARP \"SDL_RENDER_DIRECT3D11_WARP\"")]
+        public static string SDL_HINT_RENDER_DIRECT3D11_WARP => "SDL_RENDER_DIRECT3D11_WARP";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_VULKAN_DEBUG \"SDL_RENDER_VULKAN_DEBUG\"")]
+        public static string SDL_HINT_RENDER_VULKAN_DEBUG => "SDL_RENDER_VULKAN_DEBUG";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_GPU_DEBUG \"SDL_RENDER_GPU_DEBUG\"")]
+        public static string SDL_HINT_RENDER_GPU_DEBUG => "SDL_RENDER_GPU_DEBUG";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_GPU_LOW_POWER \"SDL_RENDER_GPU_LOW_POWER\"")]
+        public static string SDL_HINT_RENDER_GPU_LOW_POWER => "SDL_RENDER_GPU_LOW_POWER";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DRIVER \"SDL_RENDER_DRIVER\"")]
+        public static string SDL_HINT_RENDER_DRIVER => "SDL_RENDER_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_LINE_METHOD \"SDL_RENDER_LINE_METHOD\"")]
+        public static string SDL_HINT_RENDER_LINE_METHOD => "SDL_RENDER_LINE_METHOD";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE \"SDL_RENDER_METAL_PREFER_LOW_POWER_DEVICE\"")]
+        public static string SDL_HINT_RENDER_METAL_PREFER_LOW_POWER_DEVICE => "SDL_RENDER_METAL_PREFER_LOW_POWER_DEVICE";
+
+        [NativeTypeName("#define SDL_HINT_RENDER_VSYNC \"SDL_RENDER_VSYNC\"")]
+        public static string SDL_HINT_RENDER_VSYNC => "SDL_RENDER_VSYNC";
+
+        [NativeTypeName("#define SDL_HINT_RETURN_KEY_HIDES_IME \"SDL_RETURN_KEY_HIDES_IME\"")]
+        public static string SDL_HINT_RETURN_KEY_HIDES_IME => "SDL_RETURN_KEY_HIDES_IME";
+
+        [NativeTypeName("#define SDL_HINT_ROG_GAMEPAD_MICE \"SDL_ROG_GAMEPAD_MICE\"")]
+        public static string SDL_HINT_ROG_GAMEPAD_MICE => "SDL_ROG_GAMEPAD_MICE";
+
+        [NativeTypeName("#define SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED \"SDL_ROG_GAMEPAD_MICE_EXCLUDED\"")]
+        public static string SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED => "SDL_ROG_GAMEPAD_MICE_EXCLUDED";
+
+        [NativeTypeName("#define SDL_HINT_PS2_GS_WIDTH \"SDL_PS2_GS_WIDTH\"")]
+        public static string SDL_HINT_PS2_GS_WIDTH => "SDL_PS2_GS_WIDTH";
+
+        [NativeTypeName("#define SDL_HINT_PS2_GS_HEIGHT \"SDL_PS2_GS_HEIGHT\"")]
+        public static string SDL_HINT_PS2_GS_HEIGHT => "SDL_PS2_GS_HEIGHT";
+
+        [NativeTypeName("#define SDL_HINT_PS2_GS_PROGRESSIVE \"SDL_PS2_GS_PROGRESSIVE\"")]
+        public static string SDL_HINT_PS2_GS_PROGRESSIVE => "SDL_PS2_GS_PROGRESSIVE";
+
+        [NativeTypeName("#define SDL_HINT_PS2_GS_MODE \"SDL_PS2_GS_MODE\"")]
+        public static string SDL_HINT_PS2_GS_MODE => "SDL_PS2_GS_MODE";
+
+        [NativeTypeName("#define SDL_HINT_RPI_VIDEO_LAYER \"SDL_RPI_VIDEO_LAYER\"")]
+        public static string SDL_HINT_RPI_VIDEO_LAYER => "SDL_RPI_VIDEO_LAYER";
+
+        [NativeTypeName("#define SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME \"SDL_SCREENSAVER_INHIBIT_ACTIVITY_NAME\"")]
+        public static string SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME => "SDL_SCREENSAVER_INHIBIT_ACTIVITY_NAME";
+
+        [NativeTypeName("#define SDL_HINT_SHUTDOWN_DBUS_ON_QUIT \"SDL_SHUTDOWN_DBUS_ON_QUIT\"")]
+        public static string SDL_HINT_SHUTDOWN_DBUS_ON_QUIT => "SDL_SHUTDOWN_DBUS_ON_QUIT";
+
+        [NativeTypeName("#define SDL_HINT_STORAGE_TITLE_DRIVER \"SDL_STORAGE_TITLE_DRIVER\"")]
+        public static string SDL_HINT_STORAGE_TITLE_DRIVER => "SDL_STORAGE_TITLE_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_STORAGE_USER_DRIVER \"SDL_STORAGE_USER_DRIVER\"")]
+        public static string SDL_HINT_STORAGE_USER_DRIVER => "SDL_STORAGE_USER_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL \"SDL_THREAD_FORCE_REALTIME_TIME_CRITICAL\"")]
+        public static string SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL => "SDL_THREAD_FORCE_REALTIME_TIME_CRITICAL";
+
+        [NativeTypeName("#define SDL_HINT_THREAD_PRIORITY_POLICY \"SDL_THREAD_PRIORITY_POLICY\"")]
+        public static string SDL_HINT_THREAD_PRIORITY_POLICY => "SDL_THREAD_PRIORITY_POLICY";
+
+        [NativeTypeName("#define SDL_HINT_TIMER_RESOLUTION \"SDL_TIMER_RESOLUTION\"")]
+        public static string SDL_HINT_TIMER_RESOLUTION => "SDL_TIMER_RESOLUTION";
+
+        [NativeTypeName("#define SDL_HINT_TOUCH_MOUSE_EVENTS \"SDL_TOUCH_MOUSE_EVENTS\"")]
+        public static string SDL_HINT_TOUCH_MOUSE_EVENTS => "SDL_TOUCH_MOUSE_EVENTS";
+
+        [NativeTypeName("#define SDL_HINT_TRACKPAD_IS_TOUCH_ONLY \"SDL_TRACKPAD_IS_TOUCH_ONLY\"")]
+        public static string SDL_HINT_TRACKPAD_IS_TOUCH_ONLY => "SDL_TRACKPAD_IS_TOUCH_ONLY";
+
+        [NativeTypeName("#define SDL_HINT_TV_REMOTE_AS_JOYSTICK \"SDL_TV_REMOTE_AS_JOYSTICK\"")]
+        public static string SDL_HINT_TV_REMOTE_AS_JOYSTICK => "SDL_TV_REMOTE_AS_JOYSTICK";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_ALLOW_SCREENSAVER \"SDL_VIDEO_ALLOW_SCREENSAVER\"")]
+        public static string SDL_HINT_VIDEO_ALLOW_SCREENSAVER => "SDL_VIDEO_ALLOW_SCREENSAVER";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_DISPLAY_PRIORITY \"SDL_VIDEO_DISPLAY_PRIORITY\"")]
+        public static string SDL_HINT_VIDEO_DISPLAY_PRIORITY => "SDL_VIDEO_DISPLAY_PRIORITY";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_DOUBLE_BUFFER \"SDL_VIDEO_DOUBLE_BUFFER\"")]
+        public static string SDL_HINT_VIDEO_DOUBLE_BUFFER => "SDL_VIDEO_DOUBLE_BUFFER";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_DRIVER \"SDL_VIDEO_DRIVER\"")]
+        public static string SDL_HINT_VIDEO_DRIVER => "SDL_VIDEO_DRIVER";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES \"SDL_VIDEO_DUMMY_SAVE_FRAMES\"")]
+        public static string SDL_HINT_VIDEO_DUMMY_SAVE_FRAMES => "SDL_VIDEO_DUMMY_SAVE_FRAMES";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK \"SDL_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK\"")]
+        public static string SDL_HINT_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK => "SDL_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_FORCE_EGL \"SDL_VIDEO_FORCE_EGL\"")]
+        public static string SDL_HINT_VIDEO_FORCE_EGL => "SDL_VIDEO_FORCE_EGL";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES \"SDL_VIDEO_MAC_FULLSCREEN_SPACES\"")]
+        public static string SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES => "SDL_VIDEO_MAC_FULLSCREEN_SPACES";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY \"SDL_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY\"")]
+        public static string SDL_HINT_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY => "SDL_VIDEO_MAC_FULLSCREEN_MENU_VISIBILITY";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE \"SDL_VIDEO_METAL_AUTO_RESIZE_DRAWABLE\"")]
+        public static string SDL_HINT_VIDEO_METAL_AUTO_RESIZE_DRAWABLE => "SDL_VIDEO_METAL_AUTO_RESIZE_DRAWABLE";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE \"SDL_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE\"")]
+        public static string SDL_HINT_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE => "SDL_VIDEO_MATCH_EXCLUSIVE_MODE_ON_MOVE";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS \"SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS\"")]
+        public static string SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS => "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES \"SDL_VIDEO_OFFSCREEN_SAVE_FRAMES\"")]
+        public static string SDL_HINT_VIDEO_OFFSCREEN_SAVE_FRAMES => "SDL_VIDEO_OFFSCREEN_SAVE_FRAMES";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS \"SDL_VIDEO_SYNC_WINDOW_OPERATIONS\"")]
+        public static string SDL_HINT_VIDEO_SYNC_WINDOW_OPERATIONS => "SDL_VIDEO_SYNC_WINDOW_OPERATIONS";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR \"SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR\"")]
+        public static string SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR => "SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION \"SDL_VIDEO_WAYLAND_MODE_EMULATION\"")]
+        public static string SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION => "SDL_VIDEO_WAYLAND_MODE_EMULATION";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_MODE_SCALING \"SDL_VIDEO_WAYLAND_MODE_SCALING\"")]
+        public static string SDL_HINT_VIDEO_WAYLAND_MODE_SCALING => "SDL_VIDEO_WAYLAND_MODE_SCALING";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR \"SDL_VIDEO_WAYLAND_PREFER_LIBDECOR\"")]
+        public static string SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR => "SDL_VIDEO_WAYLAND_PREFER_LIBDECOR";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY \"SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY\"")]
+        public static string SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY => "SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WIN_D3DCOMPILER \"SDL_VIDEO_WIN_D3DCOMPILER\"")]
+        public static string SDL_HINT_VIDEO_WIN_D3DCOMPILER => "SDL_VIDEO_WIN_D3DCOMPILER";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT \"SDL_VIDEO_X11_ENABLE_XSYNC_EXT\"")]
+        public static string SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT => "SDL_VIDEO_X11_ENABLE_XSYNC_EXT";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT \"SDL_VIDEO_X11_EXTERNAL_WINDOW_INPUT\"")]
+        public static string SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT => "SDL_VIDEO_X11_EXTERNAL_WINDOW_INPUT";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR \"SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR\"")]
+        public static string SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR => "SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_NET_WM_PING \"SDL_VIDEO_X11_NET_WM_PING\"")]
+        public static string SDL_HINT_VIDEO_X11_NET_WM_PING => "SDL_VIDEO_X11_NET_WM_PING";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_NODIRECTCOLOR \"SDL_VIDEO_X11_NODIRECTCOLOR\"")]
+        public static string SDL_HINT_VIDEO_X11_NODIRECTCOLOR => "SDL_VIDEO_X11_NODIRECTCOLOR";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_SCALING_FACTOR \"SDL_VIDEO_X11_SCALING_FACTOR\"")]
+        public static string SDL_HINT_VIDEO_X11_SCALING_FACTOR => "SDL_VIDEO_X11_SCALING_FACTOR";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_VISUALID \"SDL_VIDEO_X11_VISUALID\"")]
+        public static string SDL_HINT_VIDEO_X11_VISUALID => "SDL_VIDEO_X11_VISUALID";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_WINDOW_VISUALID \"SDL_VIDEO_X11_WINDOW_VISUALID\"")]
+        public static string SDL_HINT_VIDEO_X11_WINDOW_VISUALID => "SDL_VIDEO_X11_WINDOW_VISUALID";
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_XRANDR \"SDL_VIDEO_X11_XRANDR\"")]
+        public static string SDL_HINT_VIDEO_X11_XRANDR => "SDL_VIDEO_X11_XRANDR";
+
+        [NativeTypeName("#define SDL_HINT_VISIONOS_HDR_HEADROOM_UI \"SDL_VISIONOS_HDR_HEADROOM_UI\"")]
+        public static string SDL_HINT_VISIONOS_HDR_HEADROOM_UI => "SDL_VISIONOS_HDR_HEADROOM_UI";
+
+        [NativeTypeName("#define SDL_HINT_VITA_ENABLE_BACK_TOUCH \"SDL_VITA_ENABLE_BACK_TOUCH\"")]
+        public static string SDL_HINT_VITA_ENABLE_BACK_TOUCH => "SDL_VITA_ENABLE_BACK_TOUCH";
+
+        [NativeTypeName("#define SDL_HINT_VITA_ENABLE_FRONT_TOUCH \"SDL_VITA_ENABLE_FRONT_TOUCH\"")]
+        public static string SDL_HINT_VITA_ENABLE_FRONT_TOUCH => "SDL_VITA_ENABLE_FRONT_TOUCH";
+
+        [NativeTypeName("#define SDL_HINT_VITA_MODULE_PATH \"SDL_VITA_MODULE_PATH\"")]
+        public static string SDL_HINT_VITA_MODULE_PATH => "SDL_VITA_MODULE_PATH";
+
+        [NativeTypeName("#define SDL_HINT_VITA_PVR_INIT \"SDL_VITA_PVR_INIT\"")]
+        public static string SDL_HINT_VITA_PVR_INIT => "SDL_VITA_PVR_INIT";
+
+        [NativeTypeName("#define SDL_HINT_VITA_RESOLUTION \"SDL_VITA_RESOLUTION\"")]
+        public static string SDL_HINT_VITA_RESOLUTION => "SDL_VITA_RESOLUTION";
+
+        [NativeTypeName("#define SDL_HINT_VITA_PVR_OPENGL \"SDL_VITA_PVR_OPENGL\"")]
+        public static string SDL_HINT_VITA_PVR_OPENGL => "SDL_VITA_PVR_OPENGL";
+
+        [NativeTypeName("#define SDL_HINT_VITA_TOUCH_MOUSE_DEVICE \"SDL_VITA_TOUCH_MOUSE_DEVICE\"")]
+        public static string SDL_HINT_VITA_TOUCH_MOUSE_DEVICE => "SDL_VITA_TOUCH_MOUSE_DEVICE";
+
+        [NativeTypeName("#define SDL_HINT_VULKAN_DISPLAY \"SDL_VULKAN_DISPLAY\"")]
+        public static string SDL_HINT_VULKAN_DISPLAY => "SDL_VULKAN_DISPLAY";
+
+        [NativeTypeName("#define SDL_HINT_VULKAN_LIBRARY \"SDL_VULKAN_LIBRARY\"")]
+        public static string SDL_HINT_VULKAN_LIBRARY => "SDL_VULKAN_LIBRARY";
+
+        [NativeTypeName("#define SDL_HINT_WAVE_FACT_CHUNK \"SDL_WAVE_FACT_CHUNK\"")]
+        public static string SDL_HINT_WAVE_FACT_CHUNK => "SDL_WAVE_FACT_CHUNK";
+
+        [NativeTypeName("#define SDL_HINT_WAVE_CHUNK_LIMIT \"SDL_WAVE_CHUNK_LIMIT\"")]
+        public static string SDL_HINT_WAVE_CHUNK_LIMIT => "SDL_WAVE_CHUNK_LIMIT";
+
+        [NativeTypeName("#define SDL_HINT_WAVE_RIFF_CHUNK_SIZE \"SDL_WAVE_RIFF_CHUNK_SIZE\"")]
+        public static string SDL_HINT_WAVE_RIFF_CHUNK_SIZE => "SDL_WAVE_RIFF_CHUNK_SIZE";
+
+        [NativeTypeName("#define SDL_HINT_WAVE_TRUNCATION \"SDL_WAVE_TRUNCATION\"")]
+        public static string SDL_HINT_WAVE_TRUNCATION => "SDL_WAVE_TRUNCATION";
+
+        [NativeTypeName("#define SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED \"SDL_WINDOW_ACTIVATE_WHEN_RAISED\"")]
+        public static string SDL_HINT_WINDOW_ACTIVATE_WHEN_RAISED => "SDL_WINDOW_ACTIVATE_WHEN_RAISED";
+
+        [NativeTypeName("#define SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN \"SDL_WINDOW_ACTIVATE_WHEN_SHOWN\"")]
+        public static string SDL_HINT_WINDOW_ACTIVATE_WHEN_SHOWN => "SDL_WINDOW_ACTIVATE_WHEN_SHOWN";
+
+        [NativeTypeName("#define SDL_HINT_WINDOW_ALLOW_TOPMOST \"SDL_WINDOW_ALLOW_TOPMOST\"")]
+        public static string SDL_HINT_WINDOW_ALLOW_TOPMOST => "SDL_WINDOW_ALLOW_TOPMOST";
+
+        [NativeTypeName("#define SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN \"SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN\"")]
+        public static string SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN => "SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4 \"SDL_WINDOWS_CLOSE_ON_ALT_F4\"")]
+        public static string SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4 => "SDL_WINDOWS_CLOSE_ON_ALT_F4";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS \"SDL_WINDOWS_ENABLE_MENU_MNEMONICS\"")]
+        public static string SDL_HINT_WINDOWS_ENABLE_MENU_MNEMONICS => "SDL_WINDOWS_ENABLE_MENU_MNEMONICS";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP \"SDL_WINDOWS_ENABLE_MESSAGELOOP\"")]
+        public static string SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP => "SDL_WINDOWS_ENABLE_MESSAGELOOP";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_GAMEINPUT \"SDL_WINDOWS_GAMEINPUT\"")]
+        public static string SDL_HINT_WINDOWS_GAMEINPUT => "SDL_WINDOWS_GAMEINPUT";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_RAW_KEYBOARD \"SDL_WINDOWS_RAW_KEYBOARD\"")]
+        public static string SDL_HINT_WINDOWS_RAW_KEYBOARD => "SDL_WINDOWS_RAW_KEYBOARD";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS \"SDL_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS\"")]
+        public static string SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS => "SDL_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK \"SDL_WINDOWS_RAW_KEYBOARD_INPUTSINK\"")]
+        public static string SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK => "SDL_WINDOWS_RAW_KEYBOARD_INPUTSINK";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_RAW_MOUSE_NOLEGACY \"SDL_WINDOWS_RAW_MOUSE_NOLEGACY\"")]
+        public static string SDL_HINT_WINDOWS_RAW_MOUSE_NOLEGACY => "SDL_WINDOWS_RAW_MOUSE_NOLEGACY";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL \"SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL\"")]
+        public static string SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL => "SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_INTRESOURCE_ICON \"SDL_WINDOWS_INTRESOURCE_ICON\"")]
+        public static string SDL_HINT_WINDOWS_INTRESOURCE_ICON => "SDL_WINDOWS_INTRESOURCE_ICON";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL \"SDL_WINDOWS_INTRESOURCE_ICON_SMALL\"")]
+        public static string SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL => "SDL_WINDOWS_INTRESOURCE_ICON_SMALL";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_USE_D3D9EX \"SDL_WINDOWS_USE_D3D9EX\"")]
+        public static string SDL_HINT_WINDOWS_USE_D3D9EX => "SDL_WINDOWS_USE_D3D9EX";
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE \"SDL_WINDOWS_ERASE_BACKGROUND_MODE\"")]
+        public static string SDL_HINT_WINDOWS_ERASE_BACKGROUND_MODE => "SDL_WINDOWS_ERASE_BACKGROUND_MODE";
+
+        [NativeTypeName("#define SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT \"SDL_X11_FORCE_OVERRIDE_REDIRECT\"")]
+        public static string SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT => "SDL_X11_FORCE_OVERRIDE_REDIRECT";
+
+        [NativeTypeName("#define SDL_HINT_X11_WINDOW_TYPE \"SDL_X11_WINDOW_TYPE\"")]
+        public static string SDL_HINT_X11_WINDOW_TYPE => "SDL_X11_WINDOW_TYPE";
+
+        [NativeTypeName("#define SDL_HINT_X11_XCB_LIBRARY \"SDL_X11_XCB_LIBRARY\"")]
+        public static string SDL_HINT_X11_XCB_LIBRARY => "SDL_X11_XCB_LIBRARY";
+
+        [NativeTypeName("#define SDL_HINT_XINPUT_ENABLED \"SDL_XINPUT_ENABLED\"")]
+        public static string SDL_HINT_XINPUT_ENABLED => "SDL_XINPUT_ENABLED";
+
+        [NativeTypeName("#define SDL_HINT_ASSERT \"SDL_ASSERT\"")]
+        public static string SDL_HINT_ASSERT => "SDL_ASSERT";
+
+        [NativeTypeName("#define SDL_HINT_PEN_MOUSE_EVENTS \"SDL_PEN_MOUSE_EVENTS\"")]
+        public static string SDL_HINT_PEN_MOUSE_EVENTS => "SDL_PEN_MOUSE_EVENTS";
+
+        [NativeTypeName("#define SDL_HINT_PEN_TOUCH_EVENTS \"SDL_PEN_TOUCH_EVENTS\"")]
+        public static string SDL_HINT_PEN_TOUCH_EVENTS => "SDL_PEN_TOUCH_EVENTS";
+    }
+}
