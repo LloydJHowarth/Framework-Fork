@@ -15,9 +15,9 @@ namespace Engine.SDL3
             }
         }
 
-        public static void SDL_SetAssertionHandler(SDL_AssertionHandler handler, void* userdata)
+        public static void SDL_SetAssertionHandler(SDL_AssertionHandler handler, IntPtr userdata)
         {
-            iSDL_SetAssertionHandler(Marshal.GetFunctionPointerForDelegate(handler), userdata);
+            iSDL_SetAssertionHandler(Marshal.GetFunctionPointerForDelegate(handler), (void*)userdata);
         }
 
         public static SDL_AssertionHandler SDL_GetDefaultAssertionHandler()
@@ -25,11 +25,11 @@ namespace Engine.SDL3
             return Marshal.GetDelegateForFunctionPointer<SDL_AssertionHandler>(iSDL_GetDefaultAssertionHandler());
         }
 
-        public static SDL_AssertionHandler SDL_GetAssertionHandler(out void* userdata)
+        public static SDL_AssertionHandler SDL_GetAssertionHandler(out IntPtr userdata)
         {
-            fixed (void** userdataPtr = &userdata)
+            fixed (IntPtr* userdataPtr = &userdata)
             {
-                return Marshal.GetDelegateForFunctionPointer<SDL_AssertionHandler>(iSDL_GetAssertionHandler(userdataPtr));
+                return Marshal.GetDelegateForFunctionPointer<SDL_AssertionHandler>(iSDL_GetAssertionHandler((void**)userdataPtr));
             }
         }
 
