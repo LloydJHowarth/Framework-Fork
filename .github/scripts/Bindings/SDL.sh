@@ -105,9 +105,9 @@ find "$OUTPUTS" -type f -name "*.cs" -print0 | while IFS= read -r -d '' file; do
   sed -i -E 's/public static ReadOnlySpan<byte> ([A-Za-z0-9_]+) => "([^"]*)"u8;/public static string \1 => "\2";/' "$file"
 
   # Remove Attributes
-  sed -i -E '/\[return: NativeTypeName\("[^"]*"\)\]/d' "$file"
-  sed -i -E 's/\[NativeTypeName\("[^"]*"\)\] //g' "$file"
-  sed -i -E '/\[NativeTypeName.*\]/d' "$file"
+  # sed -i -E '/\[return: NativeTypeName\("[^"]*"\)\]/d' "$file"
+  # sed -i -E 's/\[NativeTypeName\("[^"]*"\)\] //g' "$file"
+  # sed -i -E '/\[NativeTypeName.*\]/d' "$file"
 
   # Remove Argslist
   sed -i -E 's/\, __arglist//g' "$file"
