@@ -1,4 +1,5 @@
 ﻿using System;
+using Engine.SDL3;
 
 namespace Engine
 {
@@ -8,6 +9,12 @@ namespace Engine
         
         public void Run()
         {
+            SDL.SDL_Init((uint)(SDL_InitFlags.SDL_INIT_AUDIO | SDL_InitFlags.SDL_INIT_VIDEO));
+
+            var devices = SDL.SDL_GetAudioPlaybackDevices(out int count);
+            
+            Console.WriteLine(devices.Length + " " + count);
+            
             if (!IsRunning)
             {
                 IsRunning = true;
@@ -21,7 +28,7 @@ namespace Engine
         {
             while (IsRunning)
             {
-                Console.WriteLine("Running");
+                // Console.WriteLine("Running");
             }
             
             Exit();
